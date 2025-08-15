@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M77 Ag - Kyle & Brandi McConnell | Quality Farming & Agricultural Services</title>
+    <title>M77 AG - Premium Agricultural Services</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -12,682 +14,910 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
-            color: #2a2a2a;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            font-family: 'Open Sans', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: white;
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            border-bottom: 3px solid #8b6f47;
-        }
-
+        /* Navigation */
         nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 15px 50px;
+            background: rgba(0, 0, 0, 0.95);
+        }
+
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #f5f5f5;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            letter-spacing: 2px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #fff;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 40px;
         }
 
         .nav-links a {
-            color: #f5f5f5;
+            color: #fff;
             text-decoration: none;
             font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             transition: all 0.3s ease;
-            padding: 8px 16px;
-            border-radius: 4px;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: #8b6f47;
-            background: rgba(139, 111, 71, 0.1);
-            transform: translateY(-1px);
+            color: #a0845c;
         }
 
-        .hero {
-            background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(45, 45, 45, 0.7)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23444444;stop-opacity:1" /><stop offset="100%" style="stop-color:%23666666;stop-opacity:1" /></linearGradient></defs><rect fill="url(%23sky)" width="1200" height="600"/><path fill="%235a4a3a" d="M0 450 L200 420 L400 440 L600 430 L800 450 L1000 440 L1200 460 L1200 600 L0 600 Z"/><path fill="%236b5a4a" d="M0 500 L300 480 L600 490 L900 485 L1200 495 L1200 600 L0 600 Z"/></svg>');
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: white;
-            margin-top: 80px;
-            position: relative;
-        }
-
-        .hero::before {
+        .nav-links a::after {
             content: '';
             position: absolute;
-            top: 0;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%);
-            pointer-events: none;
+            background: #a0845c;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><rect fill="%23111" width="1920" height="1080"/><circle cx="400" cy="300" r="100" fill="%23222" opacity="0.3"/><circle cx="1500" cy="700" r="150" fill="%23333" opacity="0.2"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
         }
 
         .hero-content {
-            position: relative;
-            z-index: 2;
+            max-width: 1000px;
+            animation: fadeInUp 1s ease-out;
         }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        .hero-tagline {
+            font-size: 16px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #a0845c;
+            margin-bottom: 20px;
+            font-weight: 300;
         }
 
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        .hero-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(4rem, 12vw, 8rem);
+            font-weight: 700;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
         }
 
-        .cta-buttons {
+        .hero-subtitle {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 50px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .hero-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 30px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #8b6f47 0%, #a0845c 100%);
-            color: white;
+            padding: 15px 40px;
+            border: 2px solid #a0845c;
+            background: transparent;
+            color: #fff;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(139, 111, 71, 0.3);
-            border: 2px solid transparent;
+            font-weight: 600;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
-            background: linear-gradient(135deg, #a0845c 0%, #8b6f47 100%);
+            background: #a0845c;
+            color: #000;
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(139, 111, 71, 0.4);
+            box-shadow: 0 10px 20px rgba(160, 132, 92, 0.3);
         }
 
-        .btn-secondary {
+        .btn-primary {
+            background: #a0845c;
+            color: #000;
+        }
+
+        .btn-primary:hover {
             background: transparent;
-            border: 2px solid #8b6f47;
-            color: #8b6f47;
+            color: #a0845c;
         }
 
-        .btn-secondary:hover {
-            background: #8b6f47;
-            color: white;
-        }
-
+        /* Content Sections */
         .section {
-            padding: 80px 0;
-        }
-
-        .section-alt {
-            background: linear-gradient(135deg, #f8f8f8 0%, #e0e0e0 100%);
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 80px;
         }
 
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #2a2a2a;
-            margin-bottom: 1rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-            position: relative;
+        .section-tagline {
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #a0845c;
+            margin-bottom: 20px;
         }
 
-        .section-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, #8b6f47, #a0845c);
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
         }
 
-        .section-header p {
-            font-size: 1.2rem;
-            color: #555;
+        .section-description {
+            font-size: 18px;
+            color: #ccc;
             max-width: 600px;
             margin: 0 auto;
+            line-height: 1.6;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .card {
-            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-            border: 1px solid #e0e0e0;
-            position: relative;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #8b6f47, #a0845c);
-            border-radius: 12px 12px 0 0;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        }
-
-        .card h3 {
-            color: #2a2a2a;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .story-section {
+        /* Story Section */
+        .story-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 80px;
             align-items: center;
         }
 
         .story-text {
-            font-size: 1.1rem;
+            font-size: 16px;
             line-height: 1.8;
+            color: #ddd;
+        }
+
+        .story-text p {
+            margin-bottom: 20px;
         }
 
         .story-image {
-            background: linear-gradient(45deg, #2a2a2a, #4a4a4a);
             height: 400px;
-            border-radius: 12px;
+            background: linear-gradient(45deg, #333, #222);
+            border: 2px solid #a0845c;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #f5f5f5;
-            font-size: 1.2rem;
-            text-align: center;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 3px solid #8b6f47;
-        }
-
-        .crops-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .crop-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-            border: 2px solid #e0e0e0;
-        }
-
-        .crop-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            border-color: #8b6f47;
-        }
-
-        .crop-icon {
-            height: 120px;
-            background: linear-gradient(45deg, #8b6f47, #a0845c);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .crop-info {
-            padding: 1.5rem;
-        }
-
-        .crop-info h4 {
-            color: #2a2a2a;
-            margin-bottom: 0.5rem;
-        }
-
-        .togo-section {
-            background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
-            color: white;
-            text-align: center;
-            position: relative;
-        }
-
-        .togo-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 0%, rgba(139, 111, 71, 0.1) 100%);
-            pointer-events: none;
-        }
-
-        .togo-section .section-header h2,
-        .togo-section .section-header p {
-            color: white;
-            position: relative;
-            z-index: 2;
-        }
-
-        .contact-form {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
-            max-width: 600px;
-            margin: 0 auto;
-            border: 2px solid #e0e0e0;
-            position: relative;
-        }
-
-        .contact-form::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #8b6f47, #a0845c);
-            border-radius: 12px 12px 0 0;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #2a2a2a;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #8b6f47;
-            box-shadow: 0 0 10px rgba(139, 111, 71, 0.2);
-        }
-
-        footer {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            color: white;
-            text-align: center;
-            padding: 3rem 0;
-            border-top: 3px solid #8b6f47;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h4 {
-            margin-bottom: 1rem;
-            color: #8b6f47;
-            text-transform: uppercase;
+            color: #a0845c;
+            font-size: 24px;
             letter-spacing: 2px;
         }
 
-        .footer-section a {
-            color: #d0d0d0;
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border: 1px solid #333;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(160, 132, 92, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: #a0845c;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: #a0845c;
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .service-description {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Contract Section */
+        .contract-section {
+            background: linear-gradient(135deg, #111, #000);
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+
+        .contract-form {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid #333;
+            padding: 50px;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a0845c;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            color: #fff;
+            padding: 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #a0845c;
+            box-shadow: 0 0 10px rgba(160, 132, 92, 0.3);
+        }
+
+        /* Services Table */
+        .services-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 40px 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .services-table th,
+        .services-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        .services-table th {
+            background: rgba(160, 132, 92, 0.1);
+            color: #a0845c;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .services-table input[type="checkbox"] {
+            transform: scale(1.2);
+            accent-color: #a0845c;
+        }
+
+        .services-table input[type="number"] {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            color: #fff;
+            padding: 8px;
+            width: 100px;
+        }
+
+        /* Discount Display */
+        .discount-display {
+            background: linear-gradient(45deg, #a0845c, #8b6f47);
+            color: #000;
+            padding: 20px;
+            text-align: center;
+            margin: 30px 0;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Contract Summary */
+        .contract-summary {
+            background: rgba(160, 132, 92, 0.1);
+            border: 1px solid #a0845c;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #a0845c;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            border-top: 1px solid #333;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: #ccc;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
-        .footer-section a:hover {
-            color: #8b6f47;
+        .footer-links a:hover {
+            color: #a0845c;
         }
 
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            nav {
+                padding: 20px 20px;
+            }
+
             .nav-links {
                 display: none;
             }
-            
-            .hero-content h1 {
-                font-size: 2.5rem;
+
+            .section {
+                padding: 50px 20px;
             }
-            
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-            
-            .story-section {
+
+            .story-content {
                 grid-template-columns: 1fr;
+                gap: 40px;
             }
-            
-            .cta-buttons {
+
+            .hero-buttons {
                 flex-direction: column;
                 align-items: center;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contract-form {
+                padding: 30px 20px;
+            }
+
+            .services-table {
+                font-size: 12px;
+            }
+
+            .services-table th,
+            .services-table td {
+                padding: 8px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">M77 Ag</div>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">M77 AG</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">Our Story</a></li>
-                <li><a href="#crops">What We Grow</a></li>
+                <li><a href="#story">About</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#store">Store</a></li>
+                <li><a href="#contract">Contract</a></li>
+                <li><a href="https://www.togoag.com" target="_blank">ToGo Store</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
+    <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>M77 Ag</h1>
-                <p>Kyle & Brandi McConnell - Growing Excellence, Harvesting Success</p>
-                <div class="cta-buttons">
-                    <a href="#about" class="btn">Our Story</a>
-                    <a href="https://www.togoag.com" target="_blank" class="btn btn-secondary">Visit ToGo Ag Store</a>
-                </div>
+        <div class="hero-content">
+            <div class="hero-tagline">Premium Agricultural Excellence</div>
+            <h1 class="hero-title">M77 AG</h1>
+            <p class="hero-subtitle">Kyle & Brandi McConnell | Growing Excellence, Harvesting Success</p>
+            <div class="hero-buttons">
+                <a href="#contract" class="btn btn-primary">Custom Farming</a>
+                <a href="#services" class="btn">Our Services</a>
             </div>
         </div>
     </section>
 
-    <section id="about" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Our Agricultural Journey</h2>
-                <p>From humble beginnings to modern farming excellence</p>
+    <!-- Story Section -->
+    <section id="story" class="section">
+        <div class="section-header">
+            <div class="section-tagline">Our Heritage</div>
+            <h2 class="section-title">The M77 AG Story</h2>
+            <p class="section-description">Built on generations of agricultural expertise and a commitment to excellence</p>
+        </div>
+        <div class="story-content">
+            <div class="story-text">
+                <p>At M77 Ag, Kyle and Brandi McConnell bring decades of combined agricultural experience to Northern Colorado. Our operation represents the perfect blend of traditional farming wisdom and modern agricultural technology.</p>
+                <p>We specialize in quality crop production and comprehensive custom farming services. Every acre we work represents our commitment to excellence and our deep understanding of what it takes to succeed in today's agricultural landscape.</p>
+                <p>While M77 Ag focuses on farming excellence, our partnership with ToGo Ag provides our customers with a complete agricultural solution - from field to market.</p>
             </div>
-            <div class="story-section">
-                <div class="story-text">
-                    <h3>Kyle & Brandi McConnell</h3>
-                    <p>At M77 Ag, our story is rooted in the rich soil of agricultural tradition and innovation. Kyle and Brandi McConnell founded M77 Ag with a vision to combine time-tested farming practices with modern agricultural technology.</p>
-                    
-                    <p>Our journey began with a passion for the land and a commitment to sustainable farming practices. Over the years, we've built our reputation on quality crops, reliable service, and deep connections within the agricultural community.</p>
-                    
-                    <p>Today, M77 Ag represents our dedication to excellence in farming, focusing on what we do best - growing quality crops and providing exceptional custom farming services to our neighbors and partners.</p>
-                    
-                    <p>Through our partnership with ToGo Ag, we've expanded our reach while maintaining our core focus on the farm and the crops we're passionate about growing.</p>
-                </div>
-                <div class="story-image">
-                    <div>
-                        <h3>🚜 M77 AG 🌾</h3>
-                        <p>Where tradition meets innovation in modern agriculture</p>
-                    </div>
-                </div>
+            <div class="story-image">
+                Agricultural Excellence Since Day One
             </div>
         </div>
     </section>
 
-    <section id="crops" class="section section-alt">
-        <div class="container">
-            <div class="section-header">
-                <h2>What We Grow</h2>
-                <p>Quality crops cultivated with care and precision</p>
-            </div>
-            <div class="crops-grid">
-                <div class="crop-card">
-                    <div class="crop-icon">🌽</div>
-                    <div class="crop-info">
-                        <h4>Corn</h4>
-                        <p>High-yield corn varieties selected for optimal nutrition and market value.</p>
-                    </div>
-                </div>
-                <div class="crop-card">
-                    <div class="crop-icon">🌾</div>
-                    <div class="crop-info">
-                        <h4>Soybeans</h4>
-                        <p>Premium soybeans grown with sustainable practices for maximum protein content.</p>
-                    </div>
-                </div>
-                <div class="crop-card">
-                    <div class="crop-icon">🌿</div>
-                    <div class="crop-info">
-                        <h4>Wheat</h4>
-                        <p>Quality wheat varieties adapted to our local growing conditions.</p>
-                    </div>
-                </div>
-                <div class="crop-card">
-                    <div class="crop-icon">🥬</div>
-                    <div class="crop-info">
-                        <h4>Specialty Crops</h4>
-                        <p>Various specialty crops grown based on market demand and seasonal opportunities.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- Services Section -->
     <section id="services" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Our Services</h2>
-                <p>Comprehensive agricultural solutions for modern farming</p>
+        <div class="section-header">
+            <div class="section-tagline">What We Offer</div>
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-description">Comprehensive agricultural services designed to maximize your operation's potential</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🚜</div>
+                <h3 class="service-title">Custom Farming</h3>
+                <p class="service-description">Complete field operations from soil preparation through harvest, tailored to your specific needs and farming goals.</p>
             </div>
-            <div class="grid">
-                <div class="card">
-                    <h3>Farm Commodities</h3>
-                    <p>We sell high-quality farm commodities directly from our fields. Our crops are carefully harvested, stored, and distributed to meet the highest standards of quality and freshness.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Direct farm-to-buyer sales</li>
-                        <li>Quality-tested commodities</li>
-                        <li>Competitive pricing</li>
-                        <li>Reliable delivery</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Custom Farming</h3>
-                    <p>Our custom farming services help other farmers maximize their productivity with our expertise, equipment, and knowledge. We handle everything from planting to harvest.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Planting and seeding</li>
-                        <li>Crop maintenance</li>
-                        <li>Harvesting services</li>
-                        <li>Field preparation</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Agricultural Consulting</h3>
-                    <p>Leverage our years of experience and local knowledge to optimize your farming operations. We provide insights on crop selection, timing, and best practices.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Crop planning advice</li>
-                        <li>Soil health assessment</li>
-                        <li>Technology integration</li>
-                        <li>Market analysis</li>
-                    </ul>
-                </div>
+            <div class="service-card">
+                <div class="service-icon">🌾</div>
+                <h3 class="service-title">Crop Production</h3>
+                <p class="service-description">Quality corn, soybeans, wheat, and specialty crop production using proven techniques and modern equipment.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3 class="service-title">Farm Consulting</h3>
+                <p class="service-description">Strategic guidance on crop selection, field management, and operational efficiency to optimize your farm's profitability.</p>
             </div>
         </div>
     </section>
 
-    <section id="store" class="section togo-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>ToGo Ag Partnership</h2>
-                <p>Connecting our farm-fresh quality with convenient online shopping</p>
-            </div>
-            <div class="grid">
-                <div class="card">
-                    <h3>Online Store Access</h3>
-                    <p>Through our partnership with ToGo Ag, you can access our farm-fresh products online. Browse our selection, place orders, and have quality agricultural products delivered directly to you.</p>
-                    <a href="https://www.togoag.com" target="_blank" class="btn" style="margin-top: 1rem;">Visit ToGo Ag Store</a>
+    <!-- Contract Section -->
+    <section id="contract" class="section contract-section">
+        <div class="section-header">
+            <div class="section-tagline">Get Started</div>
+            <h2 class="section-title">Custom Farming Contract</h2>
+            <p class="section-description">Professional agricultural services with competitive market-based pricing and volume discounts</p>
+        </div>
+
+        <form class="contract-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="farm-owner">Farm Owner Name</label>
+                    <input type="text" id="farm-owner" name="farm_owner" required>
                 </div>
-                <div class="card">
-                    <h3>Farm-to-Customer</h3>
-                    <p>M77 Ag provides the agricultural expertise and quality products, while ToGo Ag handles the e-commerce platform, ensuring you get farm-fresh quality with modern convenience.</p>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="farm-location">Farm Location</label>
+                    <input type="text" id="farm-location" name="farm_location" required>
+                </div>
+                <div class="form-group">
+                    <label for="total-acres">Total Acres</label>
+                    <input type="number" id="total-acres" name="total_acres" min="1" required onchange="calculateDiscounts()">
+                </div>
+                <div class="form-group">
+                    <label for="crop-type">Primary Crop Type</label>
+                    <select id="crop-type" name="crop_type" required>
+                        <option value="">Select Crop Type</option>
+                        <option value="corn">Corn</option>
+                        <option value="soybeans">Soybeans</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="other">Other</option>
+                    </select>
                 </div>
             </div>
+
+            <div id="discount-display" class="discount-display" style="display: none;">
+                Volume Discount Applied: <span id="discount-rate">0%</span> OFF Market Rates
+            </div>
+
+            <h3 style="color: #a0845c; margin-bottom: 20px; font-family: 'Oswald', sans-serif; letter-spacing: 2px;">SELECT SERVICES NEEDED</h3>
+            
+            <table class="services-table">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Service Operation</th>
+                        <th>Market Rate</th>
+                        <th>Discounted Rate</th>
+                        <th>Your Proposed Rate</th>
+                        <th>Total Cost</th>
+                        <th>You Save</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="discing" onchange="calculateTotals()"></td>
+                        <td><strong>Discing</strong><br><small>Primary tillage operation</small></td>
+                        <td>$20.50</td>
+                        <td id="discing-rate">$20.50</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
+                        <td id="discing-total">$0.00</td>
+                        <td id="discing-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="chisel-plow" onchange="calculateTotals()"></td>
+                        <td><strong>Chisel Plow</strong><br><small>Deep tillage operation</small></td>
+                        <td>$22.00</td>
+                        <td id="chisel-rate">$22.00</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
+                        <td id="chisel-total">$0.00</td>
+                        <td id="chisel-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="field-finisher" onchange="calculateTotals()"></td>
+                        <td><strong>Field Finisher</strong><br><small>Secondary tillage</small></td>
+                        <td>$16.50</td>
+                        <td id="finisher-rate">$16.50</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
+                        <td id="finisher-total">$0.00</td>
+                        <td id="finisher-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="fertilizer-application" onchange="calculateTotals()"></td>
+                        <td><strong>Fertilizer Application</strong><br><small>Precision application</small></td>
+                        <td>$10.00</td>
+                        <td id="fertilizer-rate">$10.00</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
+                        <td id="fertilizer-total">$0.00</td>
+                        <td id="fertilizer-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="harvesting" onchange="calculateTotals()"></td>
+                        <td><strong>Harvesting</strong><br><small>Combine services</small></td>
+                        <td>$48.00</td>
+                        <td id="harvesting-rate">$48.00</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
+                        <td id="harvesting-total">$0.00</td>
+                        <td id="harvesting-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="grain-hauling" onchange="calculateTotals()"></td>
+                        <td><strong>Grain Hauling</strong><br><small>Per bushel rate</small></td>
+                        <td>$0.40/bu</td>
+                        <td id="hauling-rate">$0.40/bu</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
+                        <td id="hauling-total">$0.00</td>
+                        <td id="hauling-savings">$0.00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="contract-summary">
+                <h3 style="color: #a0845c; margin-bottom: 20px; font-family: 'Oswald', sans-serif;">CONTRACT SUMMARY</h3>
+                <div class="summary-row">
+                    <span>Subtotal (Selected Services):</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Volume Discount:</span>
+                    <span id="discount-amount">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Total Contract Value:</span>
+                    <span id="total-cost">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Your Total Savings vs. Market:</span>
+                    <span id="total-savings">$0.00</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="additional-notes">Additional Requirements or Notes</label>
+                <textarea id="additional-notes" name="additional_notes" rows="4" placeholder="Please describe any specific requirements, timing needs, or special considerations..."></textarea>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button type="submit" class="btn btn-primary" style="border: none; cursor: pointer; font-size: 16px; padding: 20px 50px;">
+                    Submit Contract Request
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- ToGo AG Section -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-tagline">Our Partner</div>
+            <h2 class="section-title">ToGo AG Store</h2>
+            <p class="section-description">Complete your agricultural needs with our online agricultural supply store</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="https://www.togoag.com" target="_blank" class="btn btn-primary">Visit ToGo AG Store</a>
         </div>
     </section>
 
-    <section id="contact" class="section section-alt">
-        <div class="container">
-            <div class="section-header">
-                <h2>Get In Touch</h2>
-                <p>Ready to discuss custom farming contracts or commodity purchases?</p>
-            </div>
-            <div class="contact-form">
-                <form>
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
-                    <div class="form-group">
-                        <label for="service">Service Interest</label>
-                        <select id="service" name="service">
-                            <option value="">Select a service</option>
-                            <option value="commodities">Farm Commodities</option>
-                            <option value="custom-farming">Custom Farming</option>
-                            <option value="consulting">Agricultural Consulting</option>
-                            <option value="general">General Inquiry</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" placeholder="Tell us about your farming needs or commodity requirements..."></textarea>
-                    </div>
-                    <button type="submit" class="btn" style="width: 100%;">Send Message</button>
-                </form>
-            </div>
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="section-header">
+            <div class="section-tagline">Get In Touch</div>
+            <h2 class="section-title">Contact M77 AG</h2>
+            <p class="section-description">Ready to discuss your farming needs? We're here to help.</p>
+        </div>
+        <div style="text-align: center; color: #ccc;">
+            <p style="font-size: 18px; margin-bottom: 20px;">Email: <a href="mailto:m77@m77ag.com" style="color: #a0845c;">m77@m77ag.com</a></p>
+            <p style="font-size: 18px;">Northern Colorado Agricultural Services</p>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>M77 Ag</h4>
-                    <p>Kyle & Brandi McConnell</p>
-                    <p>Quality farming, reliable service</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Services</h4>
-                    <p><a href="#services">Farm Commodities</a></p>
-                    <p><a href="#services">Custom Farming</a></p>
-                    <p><a href="#services">Agricultural Consulting</a></p>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <p><a href="https://www.togoag.com" target="_blank">ToGo Ag Store</a></p>
-                    <p><a href="#contact">Contact Us</a></p>
-                </div>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#story">About</a>
+                <a href="#services">Services</a>
+                <a href="#contract">Contract</a>
+                <a href="https://www.togoag.com" target="_blank">ToGo Store</a>
             </div>
-            <div style="border-top: 1px solid #34495e; padding-top: 2rem; margin-top: 2rem;">
-                <p>&copy; 2025 M77 Ag - Kyle & Brandi McConnell. All rights reserved.</p>
-            </div>
+            <p style="color: #666;">&copy; 2025 M77 AG - Kyle & Brandi McConnell. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Market rates and discount calculations
+        const marketRates = {
+            discing: 20.50,
+            chisel: 22.00,
+            finisher: 16.50,
+            fertilizer: 10.00,
+            harvesting: 48.00,
+            hauling: 0.40
+        };
+
+        function calculateDiscounts() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            let discountRate = 0;
+            
+            if (acres >= 300) {
+                discountRate = 0.14; // 14%
+            } else if (acres >= 200) {
+                discountRate = 0.10; // 10%
+            } else if (acres >= 100) {
+                discountRate = 0.07; // 7%
+            }
+
+            // Show/hide discount display
+            const discountDisplay = document.getElementById('discount-display');
+            if (discountRate > 0) {
+                discountDisplay.style.display = 'block';
+                document.getElementById('discount-rate').textContent = (discountRate * 100) + '%';
+            } else {
+                discountDisplay.style.display = 'none';
+            }
+
+            // Update discounted rates
+            document.getElementById('discing-rate').textContent = '$' + (marketRates.discing * (1 - discountRate)).toFixed(2);
+            document.getElementById('chisel-rate').textContent = '$' + (marketRates.chisel * (1 - discountRate)).toFixed(2);
+            document.getElementById('finisher-rate').textContent = '$' + (marketRates.finisher * (1 - discountRate)).toFixed(2);
+            document.getElementById('fertilizer-rate').textContent = '$' + (marketRates.fertilizer * (1 - discountRate)).toFixed(2);
+            document.getElementById('harvesting-rate').textContent = '$' + (marketRates.harvesting * (1 - discountRate)).toFixed(2);
+            document.getElementById('hauling-rate').textContent = '$' + (marketRates.hauling * (1 - discountRate)).toFixed(2) + '/bu';
+
+            calculateTotals();
+        }
+
+        function calculateTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            let discountRate = 0;
+            
+            if (acres >= 300) discountRate = 0.14;
+            else if (acres >= 200) discountRate = 0.10;
+            else if (acres >= 100) discountRate = 0.07;
+
+            let subtotal = 0;
+            let totalSavings = 0;
+
+            // Calculate each service
+            const services = ['discing', 'chisel', 'finisher', 'fertilizer', 'harvesting', 'hauling'];
+            const serviceMap = {
+                discing: 'discing',
+                chisel: 'chisel-plow', 
+                finisher: 'field-finisher',
+                fertilizer: 'fertilizer-application',
+                harvesting: 'harvesting',
+                hauling: 'grain-hauling'
+            };
+
+            services.forEach(service => {
+                const checkbox = document.querySelector(`input[value="${serviceMap[service]}"]`);
+                const proposedRateInput = checkbox.closest('tr').querySelector('input[type="number"]');
+                const totalCell = document.getElementById(service + '-total');
+                const savingsCell = document.getElementById(service + '-savings');
+
+                if (checkbox.checked && acres > 0) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    const proposedRate = parseFloat(proposedRateInput.value) || discountedRate;
+                    
+                    let totalCost, savings;
+                    
+                    if (service === 'hauling') {
+                        // Grain hauling is per bushel - estimate 180 bu/acre
+                        const estimatedBushels = acres * 180;
+                        totalCost = proposedRate * estimatedBushels;
+                        savings = (marketRate - proposedRate) * estimatedBushels;
+                        totalCell.textContent = '$' + totalCost.toFixed(0);
+                    } else {
+                        // Per acre services
+                        totalCost = proposedRate * acres;
+                        savings = (marketRate - proposedRate) * acres;
+                        totalCell.textContent = '$' + totalCost.toFixed(0);
+                    }
+                    
+                    subtotal += totalCost;
+                    totalSavings += savings;
+                    
+                    if (savings >= 0) {
+                        savingsCell.textContent = '$' + savings.toFixed(0);
+                        savingsCell.style.color = '#4CAF50';
+                    } else {
+                        savingsCell.textContent = '-$' + Math.abs(savings).toFixed(0);
+                        savingsCell.style.color = '#f44336';
+                    }
+                } else {
+                    totalCell.textContent = '$0.00';
+                    savingsCell.textContent = '$0.00';
+                    savingsCell.style.color = '#ccc';
+                }
+            });
+
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(0);
+            document.getElementById('discount-amount').textContent = (discountRate * 100) + '% Applied';
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(0);
+            
+            if (totalSavings >= 0) {
+                document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(0);
+                document.getElementById('total-savings').style.color = '#4CAF50';
+            } else {
+                document.getElementById('total-savings').textContent = '-$' + Math.abs(totalSavings).toFixed(0);
+                document.getElementById('total-savings').style.color = '#f44336';
+            }
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
                 }
             });
-        });
-
-        // Form submission handler
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We\'ll get back to you soon about your farming needs.');
-        });
-
-        // Add scroll effect to header
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(26, 26, 26, 0.95)';
-                header.style.borderBottom = '3px solid #8b6f47';
-            } else {
-                header.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)';
-                header.style.borderBottom = '3px solid #8b6f47';
-            }
         });
     </script>
 </body>
