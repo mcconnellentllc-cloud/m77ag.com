@@ -364,8 +364,12 @@
         .services-table th,
         .services-table td {
             padding: 15px;
-            text-align: left;
+            text-align: center;
             border-bottom: 1px solid #333;
+        }
+
+        .services-table td:nth-child(2) {
+            text-align: left;
         }
 
         .services-table th {
@@ -375,6 +379,7 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             font-size: 12px;
+            text-align: center;
         }
 
         .services-table input[type="checkbox"] {
@@ -611,16 +616,18 @@
                 </div>
                 <div class="form-group">
                     <label for="total-acres">Total Acres</label>
-                    <input type="number" id="total-acres" name="total_acres" min="1" required onchange="calculateDiscounts()">
+                    <input type="number" id="total-acres" name="total_acres" min="1" required>
                 </div>
                 <div class="form-group">
                     <label for="crop-type">Primary Crop Type</label>
                     <select id="crop-type" name="crop_type" required>
                         <option value="">Select Crop Type</option>
                         <option value="corn">Corn</option>
-                        <option value="soybeans">Soybeans</option>
                         <option value="wheat">Wheat</option>
-                        <option value="other">Other</option>
+                        <option value="milo">Milo</option>
+                        <option value="millet">Millet</option>
+                        <option value="sorghum-sudan">Sorghum Sudan</option>
+                        <option value="fallow">Fallow</option>
                     </select>
                 </div>
             </div>
@@ -636,7 +643,7 @@
                     <tr>
                         <th>Select</th>
                         <th>Service Operation</th>
-                        <th>Market Rate</th>
+                        <th>Market Avg</th>
                         <th>Discounted Rate</th>
                         <th>Your Proposed Rate</th>
                         <th>Total Cost</th>
@@ -644,59 +651,176 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr style="background: rgba(160, 132, 92, 0.1);">
+                        <td colspan="7" style="color: #a0845c; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-align: center;">TILLAGE OPERATIONS</td>
+                    </tr>
                     <tr>
-                        <td><input type="checkbox" name="services" value="discing" onchange="calculateTotals()"></td>
+                        <td><input type="checkbox" name="services" value="discing" class="service-checkbox"></td>
                         <td><strong>Discing</strong><br><small>Primary tillage operation</small></td>
-                        <td>$20.50</td>
-                        <td id="discing-rate">$20.50</td>
-                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
-                        <td id="discing-total">$0.00</td>
-                        <td id="discing-savings">$0.00</td>
+                        <td>$18.75</td>
+                        <td class="discounted-rate" id="discing-rate">$18.75</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="discing"></td>
+                        <td class="service-total" id="discing-total">$0.00</td>
+                        <td class="service-savings" id="discing-savings">$0.00</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="services" value="chisel-plow" onchange="calculateTotals()"></td>
+                        <td><input type="checkbox" name="services" value="chisel-plow" class="service-checkbox"></td>
                         <td><strong>Chisel Plow</strong><br><small>Deep tillage operation</small></td>
-                        <td>$22.00</td>
-                        <td id="chisel-rate">$22.00</td>
-                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
-                        <td id="chisel-total">$0.00</td>
-                        <td id="chisel-savings">$0.00</td>
+                        <td>$21.25</td>
+                        <td class="discounted-rate" id="chisel-plow-rate">$21.25</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="chisel-plow"></td>
+                        <td class="service-total" id="chisel-plow-total">$0.00</td>
+                        <td class="service-savings" id="chisel-plow-savings">$0.00</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="services" value="field-finisher" onchange="calculateTotals()"></td>
+                        <td><input type="checkbox" name="services" value="field-finisher" class="service-checkbox"></td>
                         <td><strong>Field Finisher</strong><br><small>Secondary tillage</small></td>
-                        <td>$16.50</td>
-                        <td id="finisher-rate">$16.50</td>
-                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
-                        <td id="finisher-total">$0.00</td>
-                        <td id="finisher-savings">$0.00</td>
+                        <td>$15.25</td>
+                        <td class="discounted-rate" id="field-finisher-rate">$15.25</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="field-finisher"></td>
+                        <td class="service-total" id="field-finisher-total">$0.00</td>
+                        <td class="service-savings" id="field-finisher-savings">$0.00</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="services" value="fertilizer-application" onchange="calculateTotals()"></td>
+                        <td><input type="checkbox" name="services" value="inter-row-ripping" class="service-checkbox"></td>
+                        <td><strong>Inter Row Ripping</strong><br><small>Specialized cultivation</small></td>
+                        <td>$13.50</td>
+                        <td class="discounted-rate" id="inter-row-ripping-rate">$13.50</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="inter-row-ripping"></td>
+                        <td class="service-total" id="inter-row-ripping-total">$0.00</td>
+                        <td class="service-savings" id="inter-row-ripping-savings">$0.00</td>
+                    </tr>
+                    <tr style="background: rgba(160, 132, 92, 0.1);">
+                        <td colspan="7" style="color: #a0845c; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-align: center;">PLANTING OPERATIONS</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="corn-planting" class="service-checkbox"></td>
+                        <td><strong>Corn Planting</strong><br><small>Precision planting with fertilizer</small></td>
+                        <td>$28.50</td>
+                        <td class="discounted-rate" id="corn-planting-rate">$28.50</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="corn-planting"></td>
+                        <td class="service-total" id="corn-planting-total">$0.00</td>
+                        <td class="service-savings" id="corn-planting-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="milo-planting" class="service-checkbox"></td>
+                        <td><strong>Milo Planting</strong><br><small>Sorghum precision planting</small></td>
+                        <td>$26.75</td>
+                        <td class="discounted-rate" id="milo-planting-rate">$26.75</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="milo-planting"></td>
+                        <td class="service-total" id="milo-planting-total">$0.00</td>
+                        <td class="service-savings" id="milo-planting-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="small-grain-drilling" class="service-checkbox"></td>
+                        <td><strong>Small Grain Drilling</strong><br><small>Wheat, barley, oats drilling</small></td>
+                        <td>$19.25</td>
+                        <td class="discounted-rate" id="small-grain-drilling-rate">$19.25</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="small-grain-drilling"></td>
+                        <td class="service-total" id="small-grain-drilling-total">$0.00</td>
+                        <td class="service-savings" id="small-grain-drilling-savings">$0.00</td>
+                    </tr>
+                    <tr style="background: rgba(160, 132, 92, 0.1);">
+                        <td colspan="7" style="color: #a0845c; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-align: center;">APPLICATION SERVICES</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="fertilizer-application" class="service-checkbox"></td>
                         <td><strong>Fertilizer Application</strong><br><small>Precision application</small></td>
-                        <td>$10.00</td>
-                        <td id="fertilizer-rate">$10.00</td>
-                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
-                        <td id="fertilizer-total">$0.00</td>
-                        <td id="fertilizer-savings">$0.00</td>
+                        <td>$9.25</td>
+                        <td class="discounted-rate" id="fertilizer-application-rate">$9.25</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="fertilizer-application"></td>
+                        <td class="service-total" id="fertilizer-application-total">$0.00</td>
+                        <td class="service-savings" id="fertilizer-application-savings">$0.00</td>
+                    </tr>
+                    <tr style="background: rgba(160, 132, 92, 0.1);">
+                        <td colspan="7" style="color: #a0845c; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-align: center;">HARVESTING SERVICES</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="services" value="harvesting" onchange="calculateTotals()"></td>
-                        <td><strong>Harvesting</strong><br><small>Combine services</small></td>
-                        <td>$48.00</td>
-                        <td id="harvesting-rate">$48.00</td>
-                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
-                        <td id="harvesting-total">$0.00</td>
-                        <td id="harvesting-savings">$0.00</td>
+                        <td><input type="checkbox" name="services" value="corn-harvesting" class="service-checkbox"></td>
+                        <td><strong>Corn Harvesting</strong><br><small>Combine harvesting</small></td>
+                        <td>$46.25</td>
+                        <td class="discounted-rate" id="corn-harvesting-rate">$46.25</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="corn-harvesting"></td>
+                        <td class="service-total" id="corn-harvesting-total">$0.00</td>
+                        <td class="service-savings" id="corn-harvesting-savings">$0.00</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="services" value="grain-hauling" onchange="calculateTotals()"></td>
+                        <td><input type="checkbox" name="services" value="milo-harvesting" class="service-checkbox"></td>
+                        <td><strong>Milo Harvesting</strong><br><small>Sorghum combine harvesting</small></td>
+                        <td>$44.75</td>
+                        <td class="discounted-rate" id="milo-harvesting-rate">$44.75</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="milo-harvesting"></td>
+                        <td class="service-total" id="milo-harvesting-total">$0.00</td>
+                        <td class="service-savings" id="milo-harvesting-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="wheat-harvesting" class="service-checkbox"></td>
+                        <td><strong>Wheat Harvesting</strong><br><small>Small grain combine harvesting</small></td>
+                        <td>$42.50</td>
+                        <td class="discounted-rate" id="wheat-harvesting-rate">$42.50</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="wheat-harvesting"></td>
+                        <td class="service-total" id="wheat-harvesting-total">$0.00</td>
+                        <td class="service-savings" id="wheat-harvesting-savings">$0.00</td>
+                    </tr>
+                    <tr style="background: rgba(160, 132, 92, 0.1);">
+                        <td colspan="7" style="color: #a0845c; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-align: center;">TRANSPORT & STORAGE</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="grain-cart" class="service-checkbox"></td>
+                        <td><strong>Grain Cart Services</strong><br><small>Field to storage transport</small></td>
+                        <td>$16.75</td>
+                        <td class="discounted-rate" id="grain-cart-rate">$16.75</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="grain-cart"></td>
+                        <td class="service-total" id="grain-cart-total">$0.00</td>
+                        <td class="service-savings" id="grain-cart-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="grain-hauling" class="service-checkbox special-unit" data-unit="bushel"></td>
                         <td><strong>Grain Hauling</strong><br><small>Per bushel rate</small></td>
-                        <td>$0.40/bu</td>
-                        <td id="hauling-rate">$0.40/bu</td>
-                        <td><input type="number" step="0.01" min="0" placeholder="Optional" onchange="calculateTotals()"></td>
-                        <td id="hauling-total">$0.00</td>
-                        <td id="hauling-savings">$0.00</td>
+                        <td>$0.38/bu</td>
+                        <td class="discounted-rate" id="grain-hauling-rate">$0.38/bu</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Bushels" class="custom-rate" data-service="grain-hauling"></td>
+                        <td class="service-total" id="grain-hauling-total">$0.00</td>
+                        <td class="service-savings" id="grain-hauling-savings">$0.00</td>
+                    </tr>
+                    <tr style="background: rgba(160, 132, 92, 0.1);">
+                        <td colspan="7" style="color: #a0845c; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-align: center;">HAY & FORAGE</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="swathing" class="service-checkbox"></td>
+                        <td><strong>Swathing</strong><br><small>Hay cutting services</small></td>
+                        <td>$13.25</td>
+                        <td class="discounted-rate" id="swathing-rate">$13.25</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="swathing"></td>
+                        <td class="service-total" id="swathing-total">$0.00</td>
+                        <td class="service-savings" id="swathing-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="raking" class="service-checkbox"></td>
+                        <td><strong>Raking</strong><br><small>Hay raking services</small></td>
+                        <td>$8.75</td>
+                        <td class="discounted-rate" id="raking-rate">$8.75</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="Optional" class="custom-rate" data-service="raking"></td>
+                        <td class="service-total" id="raking-total">$0.00</td>
+                        <td class="service-savings" id="raking-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="round-baling" class="service-checkbox special-unit" data-unit="bale"></td>
+                        <td><strong>Round Baling</strong><br><small>Per bale rate</small></td>
+                        <td>$17.50/bale</td>
+                        <td class="discounted-rate" id="round-baling-rate">$17.50/bale</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="# of bales" class="custom-rate" data-service="round-baling"></td>
+                        <td class="service-total" id="round-baling-total">$0.00</td>
+                        <td class="service-savings" id="round-baling-savings">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="services" value="bale-moving" class="service-checkbox special-unit" data-unit="bale"></td>
+                        <td><strong>Round Bale Moving</strong><br><small>Per bale transport</small></td>
+                        <td>$3.25/bale</td>
+                        <td class="discounted-rate" id="bale-moving-rate">$3.25/bale</td>
+                        <td><input type="number" step="0.01" min="0" placeholder="# of bales" class="custom-rate" data-service="bale-moving"></td>
+                        <td class="service-total" id="bale-moving-total">$0.00</td>
+                        <td class="service-savings" id="bale-moving-savings">$0.00</td>
                     </tr>
                 </tbody>
             </table>
@@ -709,7 +833,7 @@
                 </div>
                 <div class="summary-row">
                     <span>Volume Discount:</span>
-                    <span id="discount-amount">$0.00</span>
+                    <span id="discount-amount">-$0.00</span>
                 </div>
                 <div class="summary-row">
                     <span>Total Contract Value:</span>
@@ -774,150 +898,2657 @@
     </footer>
 
     <script>
+        // Complete market rates for all services
+        const marketRates = {
+            'discing': 18.75,
+            'chisel-plow': 21.25,
+            'field-finisher': 15.25,
+            'inter-row-ripping': 13.50,
+            'corn-planting': 28.50,
+            'milo-planting': 26.75,
+            'small-grain-drilling': 19.25,
+            'fertilizer-application': 9.25,
+            'corn-harvesting': 46.25,
+            'milo-harvesting': 44.75,
+            'wheat-harvesting': 42.50,
+            'grain-cart': 16.75,
+            'grain-hauling': 0.38,  // per bushel
+            'swathing': 13.25,
+            'raking': 8.75,
+            'round-baling': 17.50,  // per bale
+            'bale-moving': 3.25     // per bale
+        };
+
+        // Get discount rate based on acres
+        function getDiscountRate(acres) {
+            if (acres >= 300) return 0.14;
+            if (acres >= 200) return 0.10;
+            if (acres >= 100) return 0.07;
+            return 0;
+        }
+
+        // Update all discounted rates when acres change
+        function updateDiscountedRates() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            // Update discount display
+            const discountDisplay = document.getElementById('discount-display');
+            const discountRateSpan = document.getElementById('discount-rate');
+            
+            if (discountRate > 0) {
+                discountDisplay.style.display = 'block';
+                discountRateSpan.textContent = Math.round(discountRate * 100) + '%';
+            } else {
+                discountDisplay.style.display = 'none';
+            }
+            
+            // Update all service rates
+            Object.keys(marketRates).forEach(service => {
+                const rateElement = document.getElementById(service + '-rate');
+                if (rateElement) {
+                    const discountedRate = marketRates[service] * (1 - discountRate);
+                    
+                    // Format based on service type
+                    if (service === 'grain-hauling') {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let effectiveRate = discountedRate;
+                    
+                    // Check if this is a special unit service (per bushel or per bale)
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, the input is quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        effectiveRate = discountedRate; // Use the discounted rate
+                    } else {
+                        // For per-acre services
+                        const customRate = parseFloat(customRateInput?.value) || 0;
+                        if (customRate > 0) {
+                            // If custom rate is provided, use it
+                            effectiveRate = customRate;
+                        }
+                        quantity = acres;
+                    }
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate * quantity) - serviceCost;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing M77 AG Calculator...');
+            
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', function() {
+                    console.log('Acres changed to:', this.value);
+                    updateDiscountedRates();
+                });
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    console.log('Service toggled:', this.value, this.checked);
+                    calculateAllTotals();
+                });
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', function() {
+                    console.log('Custom rate changed:', this.dataset.service, this.value);
+                    calculateAllTotals();
+                });
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+            console.log('Calculator initialized.');
+        });
+
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
+            if (window.pageYOffset > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
         });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bu';
+                    } else if (service === 'round-baling' || service === 'bale-moving') {
+                        rateElement.textContent = '
 
-        // Market rates and discount calculations
-        const marketRates = {
-            discing: 20.50,
-            chisel: 22.00,
-            finisher: 16.50,
-            fertilizer: 10.00,
-            harvesting: 48.00,
-            hauling: 0.40
-        };
-
-        function calculateDiscounts() {
+        // Calculate totals for all services
+        function calculateAllTotals() {
             const acres = parseFloat(document.getElementById('total-acres').value) || 0;
-            let discountRate = 0;
+            const discountRate = getDiscountRate(acres);
             
-            if (acres >= 300) {
-                discountRate = 0.14; // 14%
-            } else if (acres >= 200) {
-                discountRate = 0.10; // 10%
-            } else if (acres >= 100) {
-                discountRate = 0.07; // 7%
-            }
-
-            // Show/hide discount display
-            const discountDisplay = document.getElementById('discount-display');
-            if (discountRate > 0) {
-                discountDisplay.style.display = 'block';
-                document.getElementById('discount-rate').textContent = (discountRate * 100) + '%';
-            } else {
-                discountDisplay.style.display = 'none';
-            }
-
-            // Update discounted rates
-            document.getElementById('discing-rate').textContent = '$' + (marketRates.discing * (1 - discountRate)).toFixed(2);
-            document.getElementById('chisel-rate').textContent = '$' + (marketRates.chisel * (1 - discountRate)).toFixed(2);
-            document.getElementById('finisher-rate').textContent = '$' + (marketRates.finisher * (1 - discountRate)).toFixed(2);
-            document.getElementById('fertilizer-rate').textContent = '$' + (marketRates.fertilizer * (1 - discountRate)).toFixed(2);
-            document.getElementById('harvesting-rate').textContent = '$' + (marketRates.harvesting * (1 - discountRate)).toFixed(2);
-            document.getElementById('hauling-rate').textContent = '$' + (marketRates.hauling * (1 - discountRate)).toFixed(2) + '/bu';
-
-            calculateTotals();
-        }
-
-        function calculateTotals() {
-            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
-            let discountRate = 0;
-            
-            if (acres >= 300) discountRate = 0.14;
-            else if (acres >= 200) discountRate = 0.10;
-            else if (acres >= 100) discountRate = 0.07;
-
             let subtotal = 0;
             let totalSavings = 0;
-
-            // Calculate each service
-            const services = ['discing', 'chisel', 'finisher', 'fertilizer', 'harvesting', 'hauling'];
-            const serviceMap = {
-                discing: 'discing',
-                chisel: 'chisel-plow', 
-                finisher: 'field-finisher',
-                fertilizer: 'fertilizer-application',
-                harvesting: 'harvesting',
-                hauling: 'grain-hauling'
-            };
-
-            services.forEach(service => {
-                const checkbox = document.querySelector(`input[value="${serviceMap[service]}"]`);
-                const proposedRateInput = checkbox.closest('tr').querySelector('input[type="number"]');
-                const totalCell = document.getElementById(service + '-total');
-                const savingsCell = document.getElementById(service + '-savings');
-
-                if (checkbox.checked && acres > 0) {
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
                     const marketRate = marketRates[service];
                     const discountedRate = marketRate * (1 - discountRate);
-                    const proposedRate = parseFloat(proposedRateInput.value) || discountedRate;
                     
-                    let totalCost, savings;
+                    let quantity = acres;
+                    let customRate = 0;
                     
-                    if (service === 'hauling') {
-                        // Grain hauling is per bushel - estimate 180 bu/acre
-                        const estimatedBushels = acres * 180;
-                        totalCost = proposedRate * estimatedBushels;
-                        savings = (marketRate - proposedRate) * estimatedBushels;
-                        totalCell.textContent = '$' + totalCost.toFixed(0);
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
                     } else {
-                        // Per acre services
-                        totalCost = proposedRate * acres;
-                        savings = (marketRate - proposedRate) * acres;
-                        totalCell.textContent = '$' + totalCost.toFixed(0);
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
                     }
                     
-                    subtotal += totalCost;
-                    totalSavings += savings;
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
                     
-                    if (savings >= 0) {
-                        savingsCell.textContent = '$' + savings.toFixed(0);
-                        savingsCell.style.color = '#4CAF50';
-                    } else {
-                        savingsCell.textContent = '-$' + Math.abs(savings).toFixed(0);
-                        savingsCell.style.color = '#f44336';
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
                     }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
                 } else {
-                    totalCell.textContent = '$0.00';
-                    savingsCell.textContent = '$0.00';
-                    savingsCell.style.color = '#ccc';
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
                 }
             });
-
-            // Update summary
-            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(0);
-            document.getElementById('discount-amount').textContent = (discountRate * 100) + '% Applied';
-            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(0);
             
-            if (totalSavings >= 0) {
-                document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(0);
-                document.getElementById('total-savings').style.color = '#4CAF50';
-            } else {
-                document.getElementById('total-savings').textContent = '-$' + Math.abs(totalSavings).toFixed(0);
-                document.getElementById('total-savings').style.color = '#f44336';
-            }
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
         }
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bale';
+                    } else {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
                 }
             });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2);
+                    }
+                }
+            });
+            
+            // Recalculate totals
+            calculateAllTotals();
+        }
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bu';
+                    } else if (service === 'round-baling' || service === 'bale-moving') {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bale';
+                    } else {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2);
+                    }
+                }
+            });
+            
+            // Recalculate totals
+            calculateAllTotals();
+        }
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + Math.max(0, serviceSavings).toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += Math.max(0, serviceSavings);
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bu';
+                    } else if (service === 'round-baling' || service === 'bale-moving') {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bale';
+                    } else {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2);
+                    }
+                }
+            });
+            
+            // Recalculate totals
+            calculateAllTotals();
+        }
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bu';
+                    } else if (service === 'round-baling' || service === 'bale-moving') {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bale';
+                    } else {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2);
+                    }
+                }
+            });
+            
+            // Recalculate totals
+            calculateAllTotals();
+        }
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bu';
+                    } else if (service === 'round-baling' || service === 'bale-moving') {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bale';
+                    } else {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2);
+                    }
+                }
+            });
+            
+            // Recalculate totals
+            calculateAllTotals();
+        }
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bu';
+                    } else if (service === 'round-baling' || service === 'bale-moving') {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bale';
+                    } else {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2);
+                    }
+                }
+            });
+            
+            // Recalculate totals
+            calculateAllTotals();
+        }
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bu';
+                    } else if (service === 'round-baling' || service === 'bale-moving') {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2) + '/bale';
+                    } else {
+                        rateElement.textContent = '
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> + discountedRate.toFixed(2);
+                    }
+                }
+            });
+            
+            // Recalculate totals
+            calculateAllTotals();
+        }
+
+        // Calculate totals for all services
+        function calculateAllTotals() {
+            const acres = parseFloat(document.getElementById('total-acres').value) || 0;
+            const discountRate = getDiscountRate(acres);
+            
+            let subtotal = 0;
+            let totalSavings = 0;
+            
+            // Process each service
+            Object.keys(marketRates).forEach(service => {
+                const checkbox = document.querySelector(`input[value="${service}"]`);
+                const totalElement = document.getElementById(service + '-total');
+                const savingsElement = document.getElementById(service + '-savings');
+                const customRateInput = document.querySelector(`input.custom-rate[data-service="${service}"]`);
+                
+                if (checkbox && checkbox.checked) {
+                    const marketRate = marketRates[service];
+                    const discountedRate = marketRate * (1 - discountRate);
+                    
+                    let quantity = acres;
+                    let customRate = 0;
+                    
+                    // Check if this is a special unit service
+                    if (checkbox.classList.contains('special-unit')) {
+                        // For per-bushel or per-bale services, use the custom input as quantity
+                        quantity = parseFloat(customRateInput?.value) || 0;
+                        customRate = 0; // Don't use as custom rate
+                    } else {
+                        // For per-acre services, use the custom input as a rate override
+                        customRate = parseFloat(customRateInput?.value) || 0;
+                    }
+                    
+                    // Calculate the effective rate
+                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
+                    
+                    // Calculate totals
+                    const serviceCost = effectiveRate * quantity;
+                    const serviceSavings = (marketRate - effectiveRate) * quantity;
+                    
+                    if (totalElement) {
+                        totalElement.textContent = '$' + serviceCost.toFixed(2);
+                    }
+                    
+                    if (savingsElement) {
+                        savingsElement.textContent = '$' + serviceSavings.toFixed(2);
+                        savingsElement.style.color = serviceSavings > 0 ? '#4CAF50' : '#fff';
+                    }
+                    
+                    subtotal += serviceCost;
+                    totalSavings += serviceSavings;
+                } else {
+                    // Service not selected
+                    if (totalElement) totalElement.textContent = '$0.00';
+                    if (savingsElement) {
+                        savingsElement.textContent = '$0.00';
+                        savingsElement.style.color = '#fff';
+                    }
+                }
+            });
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('discount-amount').textContent = '-$' + totalSavings.toFixed(2);
+            document.getElementById('total-cost').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('total-savings').textContent = '$' + totalSavings.toFixed(2);
+        }
+
+        // Initialize event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acres input
+            const acresInput = document.getElementById('total-acres');
+            if (acresInput) {
+                acresInput.addEventListener('input', updateDiscountedRates);
+                acresInput.addEventListener('change', updateDiscountedRates);
+            }
+            
+            // Service checkboxes
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Custom rate inputs
+            document.querySelectorAll('.custom-rate').forEach(input => {
+                input.addEventListener('input', calculateAllTotals);
+                input.addEventListener('change', calculateAllTotals);
+            });
+            
+            // Initialize rates on load
+            updateDiscountedRates();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
     </script>
 </body>
