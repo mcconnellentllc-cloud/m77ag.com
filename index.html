@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>M77 AG Calculator with Data Export</title>
+    <title>M77 AG Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -117,46 +117,26 @@
         .form-group {
             flex: 1;
         }
-        .button-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        .submit-btn, .export-btn, .view-btn {
+        .submit-btn {
             background: #a0845c;
             color: #000;
             border: none;
-            padding: 15px 30px;
-            font-size: 16px;
+            padding: 15px 50px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             border-radius: 4px;
+            display: block;
+            margin: 30px auto 0;
         }
-        .submit-btn:hover, .export-btn:hover, .view-btn:hover {
+        .submit-btn:hover {
             background: #b8956a;
-        }
-        .export-btn {
-            background: #4CAF50;
-        }
-        .view-btn {
-            background: #2196F3;
-        }
-        .stored-count {
-            text-align: center;
-            color: #a0845c;
-            margin: 20px 0;
-            font-size: 18px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>M77 AG - Custom Farming Calculator</h1>
-        
-        <div class="stored-count" id="stored-count">
-            Proposals Stored Locally: 0
-        </div>
         
         <div class="input-section">
             <div class="input-group">
@@ -253,6 +233,57 @@
                     <td id="t6">$0.00</td>
                     <td id="sv6">$0.00</td>
                 </tr>
+                <tr>
+                    <td><input type="checkbox" id="s7"></td>
+                    <td>Small Grain Drilling</td>
+                    <td>$19.25</td>
+                    <td id="r7">$19.25</td>
+                    <td><input type="number" id="c7" min="0" step="0.01"></td>
+                    <td id="t7">$0.00</td>
+                    <td id="sv7">$0.00</td>
+                </tr>
+                <tr class="service-header">
+                    <td colspan="7">APPLICATION SERVICES</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="s8"></td>
+                    <td>Fertilizer Application</td>
+                    <td>$9.25</td>
+                    <td id="r8">$9.25</td>
+                    <td><input type="number" id="c8" min="0" step="0.01"></td>
+                    <td id="t8">$0.00</td>
+                    <td id="sv8">$0.00</td>
+                </tr>
+                <tr class="service-header">
+                    <td colspan="7">HARVESTING SERVICES</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="s9"></td>
+                    <td>Corn Harvesting</td>
+                    <td>$46.25</td>
+                    <td id="r9">$46.25</td>
+                    <td><input type="number" id="c9" min="0" step="0.01"></td>
+                    <td id="t9">$0.00</td>
+                    <td id="sv9">$0.00</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="s10"></td>
+                    <td>Milo Harvesting</td>
+                    <td>$44.75</td>
+                    <td id="r10">$44.75</td>
+                    <td><input type="number" id="c10" min="0" step="0.01"></td>
+                    <td id="t10">$0.00</td>
+                    <td id="sv10">$0.00</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="s11"></td>
+                    <td>Wheat Harvesting</td>
+                    <td>$42.50</td>
+                    <td id="r11">$42.50</td>
+                    <td><input type="number" id="c11" min="0" step="0.01"></td>
+                    <td id="t11">$0.00</td>
+                    <td id="sv11">$0.00</td>
+                </tr>
             </tbody>
         </table>
 
@@ -274,9 +305,7 @@
 
         <div class="customer-section">
             <h2>Customer Information</h2>
-            <p style="text-align: center; color: #888; font-size: 14px;">
-                Testing Mode: Emails sending to kyle@togoag.com
-            </p>
+            <p style="text-align: center; color: #888;">Testing: Emails to kyle@togoag.com</p>
             <div class="form-row">
                 <div class="form-group">
                     <label>Operation Name</label>
@@ -297,324 +326,113 @@
                     <input type="date" id="finish">
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="email">
-                </div>
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" id="phone">
-                </div>
-            </div>
-            
-            <div class="button-group">
-                <button class="submit-btn" onclick="submitForm()">SAVE & EMAIL</button>
-                <button class="export-btn" onclick="exportToExcel()">EXPORT ALL TO EXCEL</button>
-                <button class="view-btn" onclick="viewProposals()">VIEW ALL PROPOSALS</button>
-            </div>
+            <button class="submit-btn" onclick="submitForm()">SUBMIT PROPOSAL</button>
         </div>
     </div>
 
-<script>
-// Market rates
-var rates = [18.75, 21.25, 15.25, 13.50, 28.50, 26.75];
-var names = ['Discing', 'Chisel Plow', 'Field Finisher', 'Strip Tillage', 'Corn Planting', 'Milo Planting'];
+    <script type="text/javascript">
+        var rates = [18.75, 21.25, 15.25, 13.50, 28.50, 26.75, 19.25, 9.25, 46.25, 44.75, 42.50];
+        var names = ['Discing', 'Chisel Plow', 'Field Finisher', 'Strip Tillage', 'Corn Planting', 'Milo Planting', 'Small Grain Drilling', 'Fertilizer Application', 'Corn Harvesting', 'Milo Harvesting', 'Wheat Harvesting'];
 
-// Update stored count on load
-function updateStoredCount() {
-    var proposals = JSON.parse(localStorage.getItem('m77_proposals') || '[]');
-    document.getElementById('stored-count').innerHTML = 'Proposals Stored Locally: ' + proposals.length;
-}
-
-function calc() {
-    var a = document.getElementById('acres').value || 0;
-    a = parseFloat(a);
-    
-    var d = 0;
-    if (a >= 300) d = 0.14;
-    else if (a >= 200) d = 0.10;
-    else if (a >= 100) d = 0.07;
-    
-    var banner = document.getElementById('discount-banner');
-    if (d > 0 && a > 0) {
-        banner.style.display = 'block';
-        document.getElementById('discount-rate').innerHTML = (d * 100) + '%';
-    } else {
-        banner.style.display = 'none';
-    }
-    
-    var total = 0;
-    var saved = 0;
-    
-    for (var i = 1; i <= 6; i++) {
-        var rate = rates[i-1];
-        var newRate = rate * (1 - d);
-        
-        document.getElementById('r' + i).innerHTML = '$' + newRate.toFixed(2);
-        
-        var cb = document.getElementById('s' + i);
-        if (cb && cb.checked && a > 0) {
-            var custom = document.getElementById('c' + i).value;
-            custom = custom ? parseFloat(custom) : 0;
+        function calc() {
+            var a = parseFloat(document.getElementById('acres').value) || 0;
             
-            var useRate = custom > 0 ? custom : newRate;
-            var cost = useRate * a;
-            var save = (rate - useRate) * a;
+            var d = 0;
+            if (a >= 300) d = 0.14;
+            else if (a >= 200) d = 0.10;
+            else if (a >= 100) d = 0.07;
             
-            document.getElementById('t' + i).innerHTML = '$' + cost.toFixed(2);
-            document.getElementById('sv' + i).innerHTML = '$' + Math.max(0, save).toFixed(2);
+            var banner = document.getElementById('discount-banner');
+            if (d > 0 && a > 0) {
+                banner.style.display = 'block';
+                document.getElementById('discount-rate').innerHTML = Math.round(d * 100) + '%';
+            } else {
+                banner.style.display = 'none';
+            }
             
-            total += cost;
-            saved += Math.max(0, save);
-        } else {
-            document.getElementById('t' + i).innerHTML = '$0.00';
-            document.getElementById('sv' + i).innerHTML = '$0.00';
+            var total = 0;
+            var saved = 0;
+            
+            for (var i = 1; i <= 11; i++) {
+                var rate = rates[i-1];
+                var newRate = rate * (1 - d);
+                
+                document.getElementById('r' + i).innerHTML = '$' + newRate.toFixed(2);
+                
+                var cb = document.getElementById('s' + i);
+                if (cb && cb.checked && a > 0) {
+                    var custom = parseFloat(document.getElementById('c' + i).value) || 0;
+                    var useRate = custom > 0 ? custom : newRate;
+                    var cost = useRate * a;
+                    var save = (rate - useRate) * a;
+                    
+                    document.getElementById('t' + i).innerHTML = '$' + cost.toFixed(2);
+                    document.getElementById('sv' + i).innerHTML = '$' + Math.max(0, save).toFixed(2);
+                    
+                    total += cost;
+                    saved += Math.max(0, save);
+                } else {
+                    document.getElementById('t' + i).innerHTML = '$0.00';
+                    document.getElementById('sv' + i).innerHTML = '$0.00';
+                }
+            }
+            
+            document.getElementById('subtotal').innerHTML = '$' + total.toFixed(2);
+            document.getElementById('discount').innerHTML = '-$' + saved.toFixed(2);
+            document.getElementById('total').innerHTML = '$' + total.toFixed(2);
         }
-    }
-    
-    document.getElementById('subtotal').innerHTML = '$' + total.toFixed(2);
-    document.getElementById('discount').innerHTML = '-$' + saved.toFixed(2);
-    document.getElementById('total').innerHTML = '$' + total.toFixed(2);
-}
 
-function submitForm() {
-    var name = document.getElementById('op-name').value;
-    var fields = document.getElementById('fields').value;
-    var start = document.getElementById('start').value;
-    var finish = document.getElementById('finish').value;
-    var acres = document.getElementById('acres').value;
-    var total = document.getElementById('total').innerHTML;
-    var email = document.getElementById('email').value;
-    var phone = document.getElementById('phone').value;
-    
-    if (!name || !fields || !start || !finish) {
-        alert('Please fill all required fields');
-        return;
-    }
-    
-    // Get selected services
-    var services = [];
-    for (var i = 1; i <= 6; i++) {
-        if (document.getElementById('s' + i).checked) {
-            services.push({
-                name: names[i-1],
-                total: document.getElementById('t' + i).innerHTML,
-                savings: document.getElementById('sv' + i).innerHTML
-            });
+        function submitForm() {
+            var name = document.getElementById('op-name').value;
+            var fields = document.getElementById('fields').value;
+            var start = document.getElementById('start').value;
+            var finish = document.getElementById('finish').value;
+            var acres = document.getElementById('acres').value;
+            var total = document.getElementById('total').innerHTML;
+            
+            if (!name || !fields || !start || !finish) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            var services = [];
+            for (var i = 1; i <= 11; i++) {
+                if (document.getElementById('s' + i).checked) {
+                    services.push(names[i-1] + ': ' + document.getElementById('t' + i).innerHTML);
+                }
+            }
+            
+            if (services.length == 0) {
+                alert('Please select services');
+                return;
+            }
+            
+            var msg = 'M77 AG PROPOSAL\n\n';
+            msg += 'Operation: ' + name + '\n';
+            msg += 'Fields: ' + fields + '\n';
+            msg += 'Acres: ' + acres + '\n';
+            msg += 'Start: ' + start + '\n';
+            msg += 'Finish: ' + finish + '\n\n';
+            msg += 'Services:\n' + services.join('\n');
+            msg += '\n\nTotal: ' + total;
+            
+            var email = 'mailto:kyle@togoag.com?subject=Proposal-' + name;
+            email += '&body=' + encodeURIComponent(msg);
+            window.location.href = email;
         }
-    }
-    
-    if (services.length == 0) {
-        alert('Please select services');
-        return;
-    }
-    
-    // Create proposal object
-    var proposal = {
-        id: Date.now(),
-        date: new Date().toLocaleDateString(),
-        name: name,
-        email: email,
-        phone: phone,
-        fields: fields,
-        acres: acres,
-        crop: document.getElementById('crop').value,
-        start: start,
-        finish: finish,
-        services: services,
-        subtotal: document.getElementById('subtotal').innerHTML,
-        discount: document.getElementById('discount').innerHTML,
-        total: total
-    };
-    
-    // Save to localStorage
-    var proposals = JSON.parse(localStorage.getItem('m77_proposals') || '[]');
-    proposals.push(proposal);
-    localStorage.setItem('m77_proposals', JSON.stringify(proposals));
-    
-    // Update count
-    updateStoredCount();
-    
-    // Create email
-    var emailBody = 'M77 AG CONTRACT PROPOSAL\n\n';
-    emailBody += 'Proposal ID: ' + proposal.id + '\n';
-    emailBody += 'Date: ' + proposal.date + '\n\n';
-    emailBody += 'CUSTOMER INFORMATION\n';
-    emailBody += 'Operation: ' + name + '\n';
-    emailBody += 'Email: ' + email + '\n';
-    emailBody += 'Phone: ' + phone + '\n';
-    emailBody += 'Fields: ' + fields + '\n';
-    emailBody += 'Acres: ' + acres + '\n';
-    emailBody += 'Crop: ' + (proposal.crop || 'Not specified') + '\n';
-    emailBody += 'Start: ' + start + '\n';
-    emailBody += 'Finish: ' + finish + '\n\n';
-    emailBody += 'SERVICES:\n';
-    services.forEach(function(s) {
-        emailBody += s.name + ': ' + s.total + ' (Save: ' + s.savings + ')\n';
-    });
-    emailBody += '\nTOTAL: ' + total;
-    
-    // EMAIL CONFIGURATION - Change this when ready for production
-    // Testing email: kyle@togoag.com
-    // Production email: m77@m77ag.com
-    var subject = 'Proposal #' + proposal.id + ' - ' + name;
-    var mailto = 'mailto:kyle@togoag.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(emailBody);
-    
-    // Save CSV backup
-    downloadCSV(proposal);
-    
-    alert('Proposal #' + proposal.id + ' saved successfully!\n\nA CSV file has been downloaded.\nOpening email client...');
-    
-    window.location.href = mailto;
-    
-    // Clear form
-    document.getElementById('op-name').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('phone').value = '';
-    document.getElementById('fields').value = '';
-    document.getElementById('start').value = '';
-    document.getElementById('finish').value = '';
-}
 
-function downloadCSV(proposal) {
-    var csv = 'ID,Date,Customer,Email,Phone,Acres,Fields,Crop,Start,End,Services,Total\n';
-    csv += proposal.id + ',';
-    csv += proposal.date + ',';
-    csv += proposal.name + ',';
-    csv += proposal.email + ',';
-    csv += proposal.phone + ',';
-    csv += proposal.acres + ',';
-    csv += proposal.fields + ',';
-    csv += proposal.crop + ',';
-    csv += proposal.start + ',';
-    csv += proposal.finish + ',';
-    csv += '"' + proposal.services.map(s => s.name + ':' + s.total).join(';') + '",';
-    csv += proposal.total;
-    
-    var blob = new Blob([csv], {type: 'text/csv'});
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'Proposal_' + proposal.id + '_' + proposal.name.replace(/\s/g, '_') + '.csv';
-    a.click();
-}
-
-function exportToExcel() {
-    var proposals = JSON.parse(localStorage.getItem('m77_proposals') || '[]');
-    
-    if (proposals.length == 0) {
-        alert('No proposals to export');
-        return;
-    }
-    
-    var csv = 'ID,Date,Customer,Email,Phone,Acres,Fields,Crop,Start,End,Total\n';
-    
-    proposals.forEach(function(p) {
-        csv += p.id + ',';
-        csv += p.date + ',';
-        csv += p.name + ',';
-        csv += (p.email || '') + ',';
-        csv += (p.phone || '') + ',';
-        csv += p.acres + ',';
-        csv += p.fields + ',';
-        csv += (p.crop || '') + ',';
-        csv += p.start + ',';
-        csv += p.finish + ',';
-        csv += p.total + '\n';
-    });
-    
-    var blob = new Blob([csv], {type: 'text/csv'});
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'M77_All_Proposals_' + new Date().toISOString().split('T')[0] + '.csv';
-    a.click();
-    
-    alert('Exported ' + proposals.length + ' proposals to CSV file.\nOpen this file in Excel for analysis.');
-}
-
-function viewProposals() {
-    var proposals = JSON.parse(localStorage.getItem('m77_proposals') || '[]');
-    
-    if (proposals.length == 0) {
-        alert('No proposals stored yet');
-        return;
-    }
-    
-    var win = window.open('', 'Proposals', 'width=1000,height=600');
-    var html = `
-        <html>
-        <head>
-            <title>M77 AG - All Proposals</title>
-            <style>
-                body { font-family: Arial; padding: 20px; }
-                h1 { color: #a0845c; }
-                table { width: 100%; border-collapse: collapse; }
-                th { background: #a0845c; color: white; padding: 10px; }
-                td { border: 1px solid #ddd; padding: 8px; }
-                tr:hover { background: #f5f5f5; }
-                .print-btn { background: #a0845c; color: white; border: none; padding: 10px 20px; cursor: pointer; margin-bottom: 20px; }
-            </style>
-        </head>
-        <body>
-            <h1>M77 AG Proposals (${proposals.length} Total)</h1>
-            <button class="print-btn" onclick="window.print()">Print Report</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Date</th>
-                        <th>Customer</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Acres</th>
-                        <th>Start</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-    
-    proposals.forEach(function(p) {
-        html += `
-            <tr>
-                <td>${p.id}</td>
-                <td>${p.date}</td>
-                <td>${p.name}</td>
-                <td>${p.email || ''}</td>
-                <td>${p.phone || ''}</td>
-                <td>${p.acres}</td>
-                <td>${p.start}</td>
-                <td>${p.total}</td>
-            </tr>`;
-    });
-    
-    html += `
-                </tbody>
-            </table>
-            <h3>Total Revenue: ${proposals.reduce((sum, p) => sum + parseFloat(p.total.replace('$', '')), 0).toFixed(2)}</h3>
-        </body>
-        </html>`;
-    
-    win.document.write(html);
-}
-
-// Setup events
-window.onload = function() {
-    updateStoredCount();
-    
-    document.getElementById('acres').onchange = calc;
-    document.getElementById('acres').oninput = calc;
-    
-    for (var i = 1; i <= 6; i++) {
-        document.getElementById('s' + i).onchange = calc;
-        document.getElementById('c' + i).onchange = calc;
-        document.getElementById('c' + i).oninput = calc;
-    }
-    
-    calc();
-};
-</script>
-
+        window.onload = function() {
+            document.getElementById('acres').onchange = calc;
+            document.getElementById('acres').oninput = calc;
+            
+            for (var i = 1; i <= 11; i++) {
+                document.getElementById('s' + i).onchange = calc;
+                document.getElementById('c' + i).onchange = calc;
+                document.getElementById('c' + i).oninput = calc;
+            }
+            
+            calc();
+        };
+    </script>
 </body>
 </html>
