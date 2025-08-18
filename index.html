@@ -1,71 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M77 AG - Agricultural Services Calculator</title>
+    <title>M77 AG Calculator with Data Export</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
             background: #1a1a1a;
             color: #fff;
             padding: 20px;
+            margin: 0;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-
         h1 {
             text-align: center;
             color: #a0845c;
             margin-bottom: 30px;
-            font-size: 2.5em;
         }
-
         .input-section {
             background: #2a2a2a;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
         }
-
         .input-group {
             display: flex;
             gap: 20px;
-            flex-wrap: wrap;
             margin-bottom: 20px;
         }
-
         .input-group div {
             flex: 1;
-            min-width: 200px;
         }
-
         label {
             display: block;
             margin-bottom: 5px;
             color: #a0845c;
             font-weight: bold;
         }
-
-        input[type="number"], select, input[type="text"], input[type="date"] {
+        input, select {
             width: 100%;
             padding: 10px;
             background: #333;
             border: 1px solid #555;
             color: #fff;
             border-radius: 4px;
-            font-size: 16px;
         }
-
         .discount-banner {
             background: #a0845c;
             color: #000;
@@ -76,166 +58,95 @@
             border-radius: 4px;
             display: none;
         }
-
         table {
             width: 100%;
             background: #2a2a2a;
             border-collapse: collapse;
             margin-bottom: 30px;
         }
-
         th {
             background: #333;
             color: #a0845c;
             padding: 12px;
             text-align: left;
             font-weight: bold;
-            border-bottom: 2px solid #a0845c;
         }
-
         td {
-            padding: 10px 12px;
+            padding: 10px;
             border-bottom: 1px solid #333;
         }
-
-        tr:hover {
-            background: #333;
-        }
-
         .service-header {
             background: #1a1a1a;
             color: #a0845c;
             font-weight: bold;
             text-transform: uppercase;
         }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        input.custom-rate {
-            width: 100px;
-            padding: 5px;
-            background: #333;
-            border: 1px solid #555;
-            color: #fff;
-        }
-
-        .total-positive {
-            color: #4CAF50;
-            font-weight: bold;
-        }
-
         .summary {
             background: #2a2a2a;
             padding: 20px;
             border-radius: 8px;
             border: 2px solid #a0845c;
+            margin-bottom: 30px;
         }
-
         .summary h2 {
             color: #a0845c;
             margin-bottom: 15px;
         }
-
         .summary-row {
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
             border-bottom: 1px solid #333;
         }
-
-        .summary-row:last-child {
-            border-bottom: none;
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #a0845c;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        /* Customer Section Styles */
         .customer-section {
             background: #2a2a2a;
             padding: 30px;
             border-radius: 8px;
-            margin-top: 30px;
             border: 2px solid #a0845c;
         }
-
         .customer-section h2 {
             color: #a0845c;
             margin-bottom: 20px;
             text-align: center;
         }
-
-        .customer-form {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
         .form-row {
             display: flex;
             gap: 20px;
             margin-bottom: 20px;
         }
-
         .form-group {
             flex: 1;
         }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #a0845c;
-            font-weight: bold;
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
         }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            background: #333;
-            border: 1px solid #555;
-            color: #fff;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #a0845c;
-            box-shadow: 0 0 5px rgba(160, 132, 92, 0.3);
-        }
-
-        .submit-btn {
+        .submit-btn, .export-btn, .view-btn {
             background: #a0845c;
             color: #000;
             border: none;
-            padding: 15px 50px;
-            font-size: 18px;
+            padding: 15px 30px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             border-radius: 4px;
-            display: block;
-            margin: 30px auto 0;
-            transition: all 0.3s ease;
         }
-
-        .submit-btn:hover {
+        .submit-btn:hover, .export-btn:hover, .view-btn:hover {
             background: #b8956a;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(160, 132, 92, 0.3);
         }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .form-row {
-                flex-direction: column;
-            }
+        .export-btn {
+            background: #4CAF50;
+        }
+        .view-btn {
+            background: #2196F3;
+        }
+        .stored-count {
+            text-align: center;
+            color: #a0845c;
+            margin: 20px 0;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -243,28 +154,29 @@
     <div class="container">
         <h1>M77 AG - Custom Farming Calculator</h1>
         
+        <div class="stored-count" id="stored-count">
+            Proposals Stored Locally: 0
+        </div>
+        
         <div class="input-section">
             <div class="input-group">
                 <div>
-                    <label for="total-acres">Total Acres</label>
-                    <input type="number" id="total-acres" min="0" value="0">
+                    <label>Total Acres</label>
+                    <input type="number" id="acres" value="0" min="0">
                 </div>
                 <div>
-                    <label for="crop-type">Primary Crop Type</label>
-                    <select id="crop-type">
+                    <label>Primary Crop Type</label>
+                    <select id="crop">
                         <option value="">Select Crop Type</option>
                         <option value="corn">Corn</option>
                         <option value="wheat">Wheat</option>
                         <option value="milo">Milo</option>
-                        <option value="millet">Millet</option>
-                        <option value="sorghum-sudan">Sorghum Sudan</option>
-                        <option value="fallow">Fallow</option>
                     </select>
                 </div>
             </div>
             
             <div id="discount-banner" class="discount-banner">
-                Volume Discount Applied: <span id="discount-rate">0%</span> OFF Market Rates
+                Volume Discount: <span id="discount-rate">0%</span> OFF
             </div>
         </div>
 
@@ -285,115 +197,61 @@
                     <td colspan="7">TILLAGE OPERATIONS</td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" id="check-discing"></td>
+                    <td><input type="checkbox" id="s1"></td>
                     <td>Discing</td>
                     <td>$18.75</td>
-                    <td id="rate-discing">$18.75</td>
-                    <td><input type="number" class="custom-rate" id="custom-discing" min="0" step="0.01"></td>
-                    <td id="total-discing">$0.00</td>
-                    <td id="save-discing">$0.00</td>
+                    <td id="r1">$18.75</td>
+                    <td><input type="number" id="c1" min="0" step="0.01"></td>
+                    <td id="t1">$0.00</td>
+                    <td id="sv1">$0.00</td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" id="check-chisel"></td>
+                    <td><input type="checkbox" id="s2"></td>
                     <td>Chisel Plow</td>
                     <td>$21.25</td>
-                    <td id="rate-chisel">$21.25</td>
-                    <td><input type="number" class="custom-rate" id="custom-chisel" min="0" step="0.01"></td>
-                    <td id="total-chisel">$0.00</td>
-                    <td id="save-chisel">$0.00</td>
+                    <td id="r2">$21.25</td>
+                    <td><input type="number" id="c2" min="0" step="0.01"></td>
+                    <td id="t2">$0.00</td>
+                    <td id="sv2">$0.00</td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" id="check-finisher"></td>
+                    <td><input type="checkbox" id="s3"></td>
                     <td>Field Finisher</td>
                     <td>$15.25</td>
-                    <td id="rate-finisher">$15.25</td>
-                    <td><input type="number" class="custom-rate" id="custom-finisher" min="0" step="0.01"></td>
-                    <td id="total-finisher">$0.00</td>
-                    <td id="save-finisher">$0.00</td>
+                    <td id="r3">$15.25</td>
+                    <td><input type="number" id="c3" min="0" step="0.01"></td>
+                    <td id="t3">$0.00</td>
+                    <td id="sv3">$0.00</td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" id="check-ripping"></td>
+                    <td><input type="checkbox" id="s4"></td>
                     <td>Strip Tillage</td>
                     <td>$13.50</td>
-                    <td id="rate-ripping">$13.50</td>
-                    <td><input type="number" class="custom-rate" id="custom-ripping" min="0" step="0.01"></td>
-                    <td id="total-ripping">$0.00</td>
-                    <td id="save-ripping">$0.00</td>
+                    <td id="r4">$13.50</td>
+                    <td><input type="number" id="c4" min="0" step="0.01"></td>
+                    <td id="t4">$0.00</td>
+                    <td id="sv4">$0.00</td>
                 </tr>
-                
                 <tr class="service-header">
                     <td colspan="7">PLANTING OPERATIONS</td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" id="check-corn-planting"></td>
+                    <td><input type="checkbox" id="s5"></td>
                     <td>Corn Planting</td>
                     <td>$28.50</td>
-                    <td id="rate-corn-planting">$28.50</td>
-                    <td><input type="number" class="custom-rate" id="custom-corn-planting" min="0" step="0.01"></td>
-                    <td id="total-corn-planting">$0.00</td>
-                    <td id="save-corn-planting">$0.00</td>
+                    <td id="r5">$28.50</td>
+                    <td><input type="number" id="c5" min="0" step="0.01"></td>
+                    <td id="t5">$0.00</td>
+                    <td id="sv5">$0.00</td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" id="check-milo-planting"></td>
+                    <td><input type="checkbox" id="s6"></td>
                     <td>Milo Planting</td>
                     <td>$26.75</td>
-                    <td id="rate-milo-planting">$26.75</td>
-                    <td><input type="number" class="custom-rate" id="custom-milo-planting" min="0" step="0.01"></td>
-                    <td id="total-milo-planting">$0.00</td>
-                    <td id="save-milo-planting">$0.00</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="check-drilling"></td>
-                    <td>Small Grain Drilling</td>
-                    <td>$19.25</td>
-                    <td id="rate-drilling">$19.25</td>
-                    <td><input type="number" class="custom-rate" id="custom-drilling" min="0" step="0.01"></td>
-                    <td id="total-drilling">$0.00</td>
-                    <td id="save-drilling">$0.00</td>
-                </tr>
-                
-                <tr class="service-header">
-                    <td colspan="7">APPLICATION SERVICES</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="check-fertilizer"></td>
-                    <td>Fertilizer Application</td>
-                    <td>$9.25</td>
-                    <td id="rate-fertilizer">$9.25</td>
-                    <td><input type="number" class="custom-rate" id="custom-fertilizer" min="0" step="0.01"></td>
-                    <td id="total-fertilizer">$0.00</td>
-                    <td id="save-fertilizer">$0.00</td>
-                </tr>
-                
-                <tr class="service-header">
-                    <td colspan="7">HARVESTING SERVICES</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="check-corn-harvest"></td>
-                    <td>Corn Harvesting</td>
-                    <td>$46.25</td>
-                    <td id="rate-corn-harvest">$46.25</td>
-                    <td><input type="number" class="custom-rate" id="custom-corn-harvest" min="0" step="0.01"></td>
-                    <td id="total-corn-harvest">$0.00</td>
-                    <td id="save-corn-harvest">$0.00</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="check-milo-harvest"></td>
-                    <td>Milo Harvesting</td>
-                    <td>$44.75</td>
-                    <td id="rate-milo-harvest">$44.75</td>
-                    <td><input type="number" class="custom-rate" id="custom-milo-harvest" min="0" step="0.01"></td>
-                    <td id="total-milo-harvest">$0.00</td>
-                    <td id="save-milo-harvest">$0.00</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="check-wheat-harvest"></td>
-                    <td>Wheat Harvesting</td>
-                    <td>$42.50</td>
-                    <td id="rate-wheat-harvest">$42.50</td>
-                    <td><input type="number" class="custom-rate" id="custom-wheat-harvest" min="0" step="0.01"></td>
-                    <td id="total-wheat-harvest">$0.00</td>
-                    <td id="save-wheat-harvest">$0.00</td>
+                    <td id="r6">$26.75</td>
+                    <td><input type="number" id="c6" min="0" step="0.01"></td>
+                    <td id="t6">$0.00</td>
+                    <td id="sv6">$0.00</td>
                 </tr>
             </tbody>
         </table>
@@ -405,265 +263,358 @@
                 <span id="subtotal">$0.00</span>
             </div>
             <div class="summary-row">
-                <span>Volume Discount:</span>
-                <span id="discount-amount">-$0.00</span>
+                <span>Discount:</span>
+                <span id="discount">$0.00</span>
             </div>
             <div class="summary-row">
-                <span>Total Contract Value:</span>
-                <span id="total-cost">$0.00</span>
-            </div>
-            <div class="summary-row">
-                <span>Your Total Savings:</span>
-                <span id="total-savings">$0.00</span>
+                <span>Total:</span>
+                <span id="total">$0.00</span>
             </div>
         </div>
 
-        <!-- Customer Information Section -->
         <div class="customer-section">
             <h2>Customer Information</h2>
-            <div class="customer-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="operation-name">Operation Name</label>
-                        <input type="text" id="operation-name" placeholder="Enter farm/operation name">
-                    </div>
-                    <div class="form-group">
-                        <label for="num-fields">Number of Fields</label>
-                        <input type="number" id="num-fields" min="1" placeholder="Enter number of fields">
-                    </div>
+            <p style="text-align: center; color: #888; font-size: 14px;">
+                Testing Mode: Emails sending to kyle@togoag.com
+            </p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Operation Name</label>
+                    <input type="text" id="op-name">
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="start-date">Start Date</label>
-                        <input type="date" id="start-date">
-                    </div>
-                    <div class="form-group">
-                        <label for="finish-date">Finish Date</label>
-                        <input type="date" id="finish-date">
-                    </div>
+                <div class="form-group">
+                    <label>Number of Fields</label>
+                    <input type="number" id="fields" min="1">
                 </div>
-                <button class="submit-btn" onclick="submitProposal()">SUBMIT PROPOSAL</button>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input type="date" id="start">
+                </div>
+                <div class="form-group">
+                    <label>Finish Date</label>
+                    <input type="date" id="finish">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="phone">
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="submit-btn" onclick="submitForm()">SAVE & EMAIL</button>
+                <button class="export-btn" onclick="exportToExcel()">EXPORT ALL TO EXCEL</button>
+                <button class="view-btn" onclick="viewProposals()">VIEW ALL PROPOSALS</button>
             </div>
         </div>
     </div>
 
-    <script>
-        // Service configuration
-        const services = [
-            { id: 'discing', name: 'Discing', rate: 18.75 },
-            { id: 'chisel', name: 'Chisel Plow', rate: 21.25 },
-            { id: 'finisher', name: 'Field Finisher', rate: 15.25 },
-            { id: 'ripping', name: 'Inter Row Ripping', rate: 13.50 },
-            { id: 'corn-planting', name: 'Corn Planting', rate: 28.50 },
-            { id: 'milo-planting', name: 'Milo Planting', rate: 26.75 },
-            { id: 'drilling', name: 'Small Grain Drilling', rate: 19.25 },
-            { id: 'fertilizer', name: 'Fertilizer Application', rate: 9.25 },
-            { id: 'corn-harvest', name: 'Corn Harvesting', rate: 46.25 },
-            { id: 'milo-harvest', name: 'Milo Harvesting', rate: 44.75 },
-            { id: 'wheat-harvest', name: 'Wheat Harvesting', rate: 42.50 }
-        ];
+<script>
+// Market rates
+var rates = [18.75, 21.25, 15.25, 13.50, 28.50, 26.75];
+var names = ['Discing', 'Chisel Plow', 'Field Finisher', 'Strip Tillage', 'Corn Planting', 'Milo Planting'];
 
-        function getDiscount(acres) {
-            if (acres >= 300) return 0.14;  // 14% discount
-            if (acres >= 200) return 0.10;  // 10% discount
-            if (acres >= 100) return 0.07;  // 7% discount
-            return 0;
+// Update stored count on load
+function updateStoredCount() {
+    var proposals = JSON.parse(localStorage.getItem('m77_proposals') || '[]');
+    document.getElementById('stored-count').innerHTML = 'Proposals Stored Locally: ' + proposals.length;
+}
+
+function calc() {
+    var a = document.getElementById('acres').value || 0;
+    a = parseFloat(a);
+    
+    var d = 0;
+    if (a >= 300) d = 0.14;
+    else if (a >= 200) d = 0.10;
+    else if (a >= 100) d = 0.07;
+    
+    var banner = document.getElementById('discount-banner');
+    if (d > 0 && a > 0) {
+        banner.style.display = 'block';
+        document.getElementById('discount-rate').innerHTML = (d * 100) + '%';
+    } else {
+        banner.style.display = 'none';
+    }
+    
+    var total = 0;
+    var saved = 0;
+    
+    for (var i = 1; i <= 6; i++) {
+        var rate = rates[i-1];
+        var newRate = rate * (1 - d);
+        
+        document.getElementById('r' + i).innerHTML = '$' + newRate.toFixed(2);
+        
+        var cb = document.getElementById('s' + i);
+        if (cb && cb.checked && a > 0) {
+            var custom = document.getElementById('c' + i).value;
+            custom = custom ? parseFloat(custom) : 0;
+            
+            var useRate = custom > 0 ? custom : newRate;
+            var cost = useRate * a;
+            var save = (rate - useRate) * a;
+            
+            document.getElementById('t' + i).innerHTML = '$' + cost.toFixed(2);
+            document.getElementById('sv' + i).innerHTML = '$' + Math.max(0, save).toFixed(2);
+            
+            total += cost;
+            saved += Math.max(0, save);
+        } else {
+            document.getElementById('t' + i).innerHTML = '$0.00';
+            document.getElementById('sv' + i).innerHTML = '$0.00';
         }
+    }
+    
+    document.getElementById('subtotal').innerHTML = '$' + total.toFixed(2);
+    document.getElementById('discount').innerHTML = '-$' + saved.toFixed(2);
+    document.getElementById('total').innerHTML = '$' + total.toFixed(2);
+}
 
-        function calculateTotals() {
-            // Get acres
-            const acresInput = document.getElementById('total-acres');
-            const acres = parseFloat(acresInput.value) || 0;
-            
-            // Calculate discount
-            const discountRate = getDiscount(acres);
-            
-            // Show/hide discount banner
-            const banner = document.getElementById('discount-banner');
-            if (discountRate > 0 && acres > 0) {
-                banner.style.display = 'block';
-                document.getElementById('discount-rate').textContent = Math.round(discountRate * 100) + '%';
-            } else {
-                banner.style.display = 'none';
-            }
-            
-            let grandTotal = 0;
-            let totalSaved = 0;
-            
-            // Process each service
-            services.forEach(service => {
-                const checkbox = document.getElementById('check-' + service.id);
-                const customRateInput = document.getElementById('custom-' + service.id);
-                const rateElement = document.getElementById('rate-' + service.id);
-                const totalElement = document.getElementById('total-' + service.id);
-                const saveElement = document.getElementById('save-' + service.id);
-                
-                // Calculate discounted rate
-                const discountedRate = service.rate * (1 - discountRate);
-                
-                // Update rate display
-                if (rateElement) {
-                    rateElement.textContent = '$' + discountedRate.toFixed(2);
-                }
-                
-                // Calculate if checked
-                if (checkbox && checkbox.checked && acres > 0) {
-                    // Get custom rate if provided
-                    const customRate = parseFloat(customRateInput.value) || 0;
-                    const effectiveRate = customRate > 0 ? customRate : discountedRate;
-                    
-                    // Calculate totals
-                    const cost = effectiveRate * acres;
-                    const savings = (service.rate - effectiveRate) * acres;
-                    
-                    // Update display
-                    if (totalElement) {
-                        totalElement.textContent = '$' + cost.toFixed(2);
-                    }
-                    if (saveElement) {
-                        const savingsAmount = Math.max(0, savings);
-                        saveElement.textContent = '$' + savingsAmount.toFixed(2);
-                        if (savingsAmount > 0) {
-                            saveElement.style.color = '#4CAF50';
-                        } else {
-                            saveElement.style.color = '#fff';
-                        }
-                    }
-                    
-                    grandTotal += cost;
-                    totalSaved += Math.max(0, savings);
-                } else {
-                    // Not checked
-                    if (totalElement) totalElement.textContent = '$0.00';
-                    if (saveElement) {
-                        saveElement.textContent = '$0.00';
-                        saveElement.style.color = '#fff';
-                    }
-                }
-            });
-            
-            // Update summary
-            document.getElementById('subtotal').textContent = '$' + grandTotal.toFixed(2);
-            document.getElementById('discount-amount').textContent = '-$' + totalSaved.toFixed(2);
-            document.getElementById('total-cost').textContent = '$' + grandTotal.toFixed(2);
-            document.getElementById('total-savings').textContent = '
-
-        // Add event listeners
-        window.onload = function() {
-            // Auto-calculate on input changes
-            document.getElementById('total-acres').addEventListener('input', calculateTotals);
-            document.getElementById('total-acres').addEventListener('change', calculateTotals);
-            
-            // Add listeners to all checkboxes
-            services.forEach(service => {
-                const checkbox = document.getElementById('check-' + service.id);
-                const customInput = document.getElementById('custom-' + service.id);
-                
-                if (checkbox) {
-                    checkbox.addEventListener('change', calculateTotals);
-                }
-                if (customInput) {
-                    customInput.addEventListener('input', calculateTotals);
-                    customInput.addEventListener('change', calculateTotals);
-                }
-            });
-            
-            // Initial calculation
-            calculateTotals();
-        };
-    </script>
-</body>
-</html> + totalSaved.toFixed(2);
-        }
-
-        function submitProposal() {
-            // Get all form values
-            const operationName = document.getElementById('operation-name').value;
-            const numFields = document.getElementById('num-fields').value;
-            const startDate = document.getElementById('start-date').value;
-            const finishDate = document.getElementById('finish-date').value;
-            const totalCost = document.getElementById('total-cost').textContent;
-            const acres = document.getElementById('total-acres').value;
-            
-            // Validate required fields
-            if (!operationName || !numFields || !startDate || !finishDate) {
-                alert('Please fill in all customer information fields');
-                return;
-            }
-            
-            if (acres === '0' || !acres) {
-                alert('Please enter the number of acres');
-                return;
-            }
-            
-            // Get selected services
-            let selectedServices = [];
-            services.forEach(service => {
-                const checkbox = document.getElementById('check-' + service.id);
-                if (checkbox && checkbox.checked) {
-                    const total = document.getElementById('total-' + service.id).textContent;
-                    selectedServices.push(service.name + ': ' + total);
-                }
-            });
-            
-            if (selectedServices.length === 0) {
-                alert('Please select at least one service');
-                return;
-            }
-            
-            // Create summary message
-            let message = 'PROPOSAL SUMMARY\n';
-            message += '================\n\n';
-            message += 'Operation: ' + operationName + '\n';
-            message += 'Number of Fields: ' + numFields + '\n';
-            message += 'Total Acres: ' + acres + '\n';
-            message += 'Start Date: ' + startDate + '\n';
-            message += 'Finish Date: ' + finishDate + '\n\n';
-            message += 'SELECTED SERVICES:\n';
-            message += selectedServices.join('\n') + '\n\n';
-            message += 'TOTAL CONTRACT VALUE: ' + totalCost + '\n\n';
-            message += 'This proposal has been submitted successfully!\n';
-            message += 'We will contact you within 24 hours.';
-            
-            // Show confirmation
-            alert(message);
-            
-            // Here you could add code to send the data to a server
-            // For now, we'll just log it to console
-            console.log('Proposal submitted:', {
-                operationName: operationName,
-                numFields: numFields,
-                acres: acres,
-                startDate: startDate,
-                finishDate: finishDate,
-                services: selectedServices,
-                totalCost: totalCost
+function submitForm() {
+    var name = document.getElementById('op-name').value;
+    var fields = document.getElementById('fields').value;
+    var start = document.getElementById('start').value;
+    var finish = document.getElementById('finish').value;
+    var acres = document.getElementById('acres').value;
+    var total = document.getElementById('total').innerHTML;
+    var email = document.getElementById('email').value;
+    var phone = document.getElementById('phone').value;
+    
+    if (!name || !fields || !start || !finish) {
+        alert('Please fill all required fields');
+        return;
+    }
+    
+    // Get selected services
+    var services = [];
+    for (var i = 1; i <= 6; i++) {
+        if (document.getElementById('s' + i).checked) {
+            services.push({
+                name: names[i-1],
+                total: document.getElementById('t' + i).innerHTML,
+                savings: document.getElementById('sv' + i).innerHTML
             });
         }
+    }
+    
+    if (services.length == 0) {
+        alert('Please select services');
+        return;
+    }
+    
+    // Create proposal object
+    var proposal = {
+        id: Date.now(),
+        date: new Date().toLocaleDateString(),
+        name: name,
+        email: email,
+        phone: phone,
+        fields: fields,
+        acres: acres,
+        crop: document.getElementById('crop').value,
+        start: start,
+        finish: finish,
+        services: services,
+        subtotal: document.getElementById('subtotal').innerHTML,
+        discount: document.getElementById('discount').innerHTML,
+        total: total
+    };
+    
+    // Save to localStorage
+    var proposals = JSON.parse(localStorage.getItem('m77_proposals') || '[]');
+    proposals.push(proposal);
+    localStorage.setItem('m77_proposals', JSON.stringify(proposals));
+    
+    // Update count
+    updateStoredCount();
+    
+    // Create email
+    var emailBody = 'M77 AG CONTRACT PROPOSAL\n\n';
+    emailBody += 'Proposal ID: ' + proposal.id + '\n';
+    emailBody += 'Date: ' + proposal.date + '\n\n';
+    emailBody += 'CUSTOMER INFORMATION\n';
+    emailBody += 'Operation: ' + name + '\n';
+    emailBody += 'Email: ' + email + '\n';
+    emailBody += 'Phone: ' + phone + '\n';
+    emailBody += 'Fields: ' + fields + '\n';
+    emailBody += 'Acres: ' + acres + '\n';
+    emailBody += 'Crop: ' + (proposal.crop || 'Not specified') + '\n';
+    emailBody += 'Start: ' + start + '\n';
+    emailBody += 'Finish: ' + finish + '\n\n';
+    emailBody += 'SERVICES:\n';
+    services.forEach(function(s) {
+        emailBody += s.name + ': ' + s.total + ' (Save: ' + s.savings + ')\n';
+    });
+    emailBody += '\nTOTAL: ' + total;
+    
+    // EMAIL CONFIGURATION - Change this when ready for production
+    // Testing email: kyle@togoag.com
+    // Production email: m77@m77ag.com
+    var subject = 'Proposal #' + proposal.id + ' - ' + name;
+    var mailto = 'mailto:kyle@togoag.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(emailBody);
+    
+    // Save CSV backup
+    downloadCSV(proposal);
+    
+    alert('Proposal #' + proposal.id + ' saved successfully!\n\nA CSV file has been downloaded.\nOpening email client...');
+    
+    window.location.href = mailto;
+    
+    // Clear form
+    document.getElementById('op-name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('fields').value = '';
+    document.getElementById('start').value = '';
+    document.getElementById('finish').value = '';
+}
 
-        // Add event listeners
-        window.onload = function() {
-            // Auto-calculate on input changes
-            document.getElementById('total-acres').addEventListener('input', calculateTotals);
-            document.getElementById('total-acres').addEventListener('change', calculateTotals);
-            
-            // Add listeners to all checkboxes
-            services.forEach(service => {
-                const checkbox = document.getElementById('check-' + service.id);
-                const customInput = document.getElementById('custom-' + service.id);
-                
-                if (checkbox) {
-                    checkbox.addEventListener('change', calculateTotals);
-                }
-                if (customInput) {
-                    customInput.addEventListener('input', calculateTotals);
-                    customInput.addEventListener('change', calculateTotals);
-                }
-            });
-            
-            // Initial calculation
-            calculateTotals();
-        };
-    </script>
+function downloadCSV(proposal) {
+    var csv = 'ID,Date,Customer,Email,Phone,Acres,Fields,Crop,Start,End,Services,Total\n';
+    csv += proposal.id + ',';
+    csv += proposal.date + ',';
+    csv += proposal.name + ',';
+    csv += proposal.email + ',';
+    csv += proposal.phone + ',';
+    csv += proposal.acres + ',';
+    csv += proposal.fields + ',';
+    csv += proposal.crop + ',';
+    csv += proposal.start + ',';
+    csv += proposal.finish + ',';
+    csv += '"' + proposal.services.map(s => s.name + ':' + s.total).join(';') + '",';
+    csv += proposal.total;
+    
+    var blob = new Blob([csv], {type: 'text/csv'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'Proposal_' + proposal.id + '_' + proposal.name.replace(/\s/g, '_') + '.csv';
+    a.click();
+}
+
+function exportToExcel() {
+    var proposals = JSON.parse(localStorage.getItem('m77_proposals') || '[]');
+    
+    if (proposals.length == 0) {
+        alert('No proposals to export');
+        return;
+    }
+    
+    var csv = 'ID,Date,Customer,Email,Phone,Acres,Fields,Crop,Start,End,Total\n';
+    
+    proposals.forEach(function(p) {
+        csv += p.id + ',';
+        csv += p.date + ',';
+        csv += p.name + ',';
+        csv += (p.email || '') + ',';
+        csv += (p.phone || '') + ',';
+        csv += p.acres + ',';
+        csv += p.fields + ',';
+        csv += (p.crop || '') + ',';
+        csv += p.start + ',';
+        csv += p.finish + ',';
+        csv += p.total + '\n';
+    });
+    
+    var blob = new Blob([csv], {type: 'text/csv'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'M77_All_Proposals_' + new Date().toISOString().split('T')[0] + '.csv';
+    a.click();
+    
+    alert('Exported ' + proposals.length + ' proposals to CSV file.\nOpen this file in Excel for analysis.');
+}
+
+function viewProposals() {
+    var proposals = JSON.parse(localStorage.getItem('m77_proposals') || '[]');
+    
+    if (proposals.length == 0) {
+        alert('No proposals stored yet');
+        return;
+    }
+    
+    var win = window.open('', 'Proposals', 'width=1000,height=600');
+    var html = `
+        <html>
+        <head>
+            <title>M77 AG - All Proposals</title>
+            <style>
+                body { font-family: Arial; padding: 20px; }
+                h1 { color: #a0845c; }
+                table { width: 100%; border-collapse: collapse; }
+                th { background: #a0845c; color: white; padding: 10px; }
+                td { border: 1px solid #ddd; padding: 8px; }
+                tr:hover { background: #f5f5f5; }
+                .print-btn { background: #a0845c; color: white; border: none; padding: 10px 20px; cursor: pointer; margin-bottom: 20px; }
+            </style>
+        </head>
+        <body>
+            <h1>M77 AG Proposals (${proposals.length} Total)</h1>
+            <button class="print-btn" onclick="window.print()">Print Report</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Acres</th>
+                        <th>Start</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+    
+    proposals.forEach(function(p) {
+        html += `
+            <tr>
+                <td>${p.id}</td>
+                <td>${p.date}</td>
+                <td>${p.name}</td>
+                <td>${p.email || ''}</td>
+                <td>${p.phone || ''}</td>
+                <td>${p.acres}</td>
+                <td>${p.start}</td>
+                <td>${p.total}</td>
+            </tr>`;
+    });
+    
+    html += `
+                </tbody>
+            </table>
+            <h3>Total Revenue: ${proposals.reduce((sum, p) => sum + parseFloat(p.total.replace('$', '')), 0).toFixed(2)}</h3>
+        </body>
+        </html>`;
+    
+    win.document.write(html);
+}
+
+// Setup events
+window.onload = function() {
+    updateStoredCount();
+    
+    document.getElementById('acres').onchange = calc;
+    document.getElementById('acres').oninput = calc;
+    
+    for (var i = 1; i <= 6; i++) {
+        document.getElementById('s' + i).onchange = calc;
+        document.getElementById('c' + i).onchange = calc;
+        document.getElementById('c' + i).oninput = calc;
+    }
+    
+    calc();
+};
+</script>
+
 </body>
 </html>
