@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - M77 AG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #121212;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: #8bc34a;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 2rem;
+        }
+        
+        nav a {
+            position: relative;
+            padding-bottom: 0.3rem;
+        }
+        
+        nav a.active {
+            border-bottom: 2px solid #8bc34a;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-outline {
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: transparent;
+            color: #ffffff;
+        }
+        
+        .btn-primary {
+            background-color: #8bc34a;
+            border: none;
+            color: #000000;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Registration Form Styles */
+        .register-container {
+            max-width: 700px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #8bc34a;
+        }
+        
+        .register-container p {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #ccc;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            flex: 1;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background-color: #222;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #8bc34a;
+        }
+        
+        .form-group .hint {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 0.3rem;
+        }
+        
+        .password-requirements {
+            background-color: rgba(139, 195, 74, 0.1);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .password-requirements h3 {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: #8bc34a;
+        }
+        
+        .password-requirements ul {
+            list-style-type: none;
+            font-size: 0.85rem;
+            color: #ccc;
+        }
+        
+        .password-requirements li {
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .password-requirements li::before {
+            content: "•";
+            color: #8bc34a;
+            margin-right: 0.5rem;
+        }
+        
+        .checkbox-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .checkbox-group input {
+            margin-right: 0.5rem;
+        }
+        
+        .register-button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #8bc34a;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .register-button:hover {
+            background-color: #9bcc5e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .register-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .register-footer a {
+            color: #8bc34a;
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        footer p {
+            color: #777;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav {
+                margin: 1rem 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+                margin-left: 0;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .register-container {
+                margin: 2rem 1rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="/" class="logo">M77<span>AG</span></a>
+        
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/crops.html">Crops</a></li>
+                <li><a href="/cattle.html">Cattle</a></li>
+                <li><a href="/services.html">Services</a></li>
+                <li><a href="/applications.html">Applications</a></li>
+                <li><a href="/about.html">About</a></li>
+            </ul>
+        </nav>
+        
+        <div class="auth-buttons">
+            <a href="/account" class="btn btn-outline">Log In</a>
+            <a href="/calculator.html" class="btn btn-primary">Request Quote</a>
+        </div>
+    </header>
+    
+    <!-- Registration Form -->
+    <div class="register-container">
+        <h2>Create Your Account</h2>
+        <p>Join M77 AG to access custom farming services and more</p>
+        
+        <form id="registrationForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+            </div>
+            
+            <div class="form-group">
+                <label for="company">Company/Farm Name (Optional)</label>
+                <input type="text" id="company" name="company">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+            </div>
+            
+            <div class="password-requirements">
+                <h3>Password Requirements</h3>
+                <ul>
+                    <li>At least 8 characters long</li>
+                    <li>Must include at least one uppercase letter</li>
+                    <li>Must include at least one number</li>
+                    <li>Must include at least one special character</li>
+                </ul>
+            </div>
+            
+            <div class="form-group">
+                <label for="accountType">Account Type</label>
+                <select id="accountType" name="accountType" required>
+                    <option value="">Select Account Type</option>
+                    <option value="farmer">Farmer</option>
+                    <option value="landowner">Landowner</option>
+                    <option value="contractor">Contractor</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
+                <label for="termsAgreement">I agree to the <a href="/terms.html" target="_blank">Terms of Service</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a></label>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="marketingConsent" name="marketingConsent">
+                <label for="marketingConsent">I would like to receive marketing communications from M77 AG</label>
+            </div>
+            
+            <button type="submit" class="register-button">Create Account</button>
+            
+            <div class="register-footer">
+                <p>Already have an account? <a href="/account">Log In</a></p>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 M77 AG. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const loggedIn = localStorage.getItem('loggedIn');
+            if (loggedIn === 'true') {
+                // Redirect to dashboard if already logged in
+                window.location.href = '/account/dashboard.html';
+                return;
+            }
+            
+            // Form validation and submission
+            document.getElementById('registrationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const termsAgreement = document.getElementById('termsAgreement').checked;
+                
+                // Basic validation
+                if (!firstName || !lastName || !email || !password) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                // Password strength validation
+                const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+                if (!passwordRegex.test(password)) {
+                    alert('Password does not meet the requirements');
+                    return;
+                }
+                
+                if (!termsAgreement) {
+                    alert('You must agree to the Terms of Service and Privacy Policy');
+                    return;
+                }
+                
+                // For demonstration - create a new user account
+                // In a real application, this would send data to your server
+                const user = {
+                    name: firstName + ' ' + lastName,
+                    email: email,
+                    firstName: firstName,
+                    lastName: lastName
+                };
+                
+                // Store user info
+                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('loggedIn', 'true');
+                
+                // Show success message and redirect
+                alert('Account created successfully! Redirecting to your dashboard...');
+                window.location.href = '/account/dashboard.html';
+            });
+        });
+    </script>
+</body>
+</html>

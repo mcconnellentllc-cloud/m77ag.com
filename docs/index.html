@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M77 AG - Advanced Agricultural Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+        
+        header {
+            background-color: #121212;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: #8bc34a;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 2rem;
+        }
+        
+        nav a {
+            position: relative;
+            padding-bottom: 0.3rem;
+        }
+        
+        nav a.active {
+            border-bottom: 2px solid #8bc34a;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-outline {
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: transparent;
+            color: #ffffff;
+        }
+        
+        .btn-primary {
+            background-color: #8bc34a;
+            border: none;
+            color: #000000;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero {
+            height: 100vh;
+            background-color: #121212;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 5rem;
+            text-align: center;
+        }
+        
+        .hero-content {
+            background-image: url('https://images.pexels.com/photos/175413/pexels-photo-175413.jpeg');
+            background-size: cover;
+            background-position: center;
+            padding: 4rem;
+            border-radius: 8px;
+            position: relative;
+            max-width: 1000px;
+            width: 100%;
+        }
+        
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+        }
+        
+        .hero-text {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: #8bc34a;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .services {
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        
+        .services h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .services p {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: #ccc;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-item {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .service-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-content p {
+            margin: 0 0 1.5rem;
+            color: #ddd;
+            font-size: 1rem;
+        }
+        
+        .learn-more-btn {
+            display: inline-block;
+            background-color: #8bc34a;
+            color: #000;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .learn-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .accounting-section {
+            margin-top: 2rem;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer {
+            background-color: #0a0a0a;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        footer p {
+            color: #777;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav {
+                margin: 1rem 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero {
+                padding: 0 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">M77<span>AG</span></a>
+        
+        <nav>
+            <ul>
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/crops.html">Crops</a></li>
+                <li><a href="/cattle.html">Cattle</a></li>
+                <li><a href="/services.html">Services</a></li>
+                <li><a href="/applications.html">Applications</a></li>
+                <li><a href="/about.html">About</a></li>
+            </ul>
+        </nav>
+        
+        <div class="auth-buttons">
+            <a href="/account" class="btn btn-outline">Log In</a>
+            <a href="/calculator.html" class="btn btn-primary">Request Quote</a>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Advanced <span>Agricultural</span> Solutions for Modern Farming</h1>
+                <p>M77 AG provides comprehensive farming services, custom applications, and innovative agricultural solutions to maximize your yield and optimize your operations.</p>
+                <div class="hero-buttons">
+                    <a href="/services.html" class="btn btn-primary">Explore Services</a>
+                    <a href="/about.html" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="services">
+        <h2>Our Agricultural Services</h2>
+        <p>Select a service to learn more about how M77 AG can help with your agricultural needs</p>
+        
+        <div class="service-grid">
+            <div class="service-item">
+                <div class="service-content">
+                    <h3>Crop Protection</h3>
+                    <p>Advanced solutions to protect your crops and maximize yield</p>
+                    <a href="/crops.html" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-content">
+                    <h3>M77 AG Custom Farming</h3>
+                    <p>Comprehensive farming services tailored to your specific needs</p>
+                    <a href="/services.html" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-content">
+                    <h3>M77 AG Commodities</h3>
+                    <p>Quality agricultural products and crop varieties</p>
+                    <a href="/crops.html#commodities" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-content">
+                    <h3>M77 AG Hunting and Recreation</h3>
+                    <p>Land use opportunities for hunting and outdoor activities</p>
+                    <a href="/services.html#recreation" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="services accounting-section">
+        <h2>Agricultural Accounting</h2>
+        <p>Specialized accounting solutions to optimize your agricultural business</p>
+        
+        <div class="service-grid">
+            <div class="service-item">
+                <div class="service-content">
+                    <h3>Financial Reporting</h3>
+                    <p>Comprehensive financial statements and analyses tailored for agricultural operations</p>
+                    <a href="/accounting.html#reporting" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-content">
+                    <h3>Agricultural Tax Planning</h3>
+                    <p>Strategic tax planning and preparation for farming operations</p>
+                    <a href="/accounting.html#tax" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-content">
+                    <h3>Farm Cost Management</h3>
+                    <p>Track and optimize expenses to maximize profitability</p>
+                    <a href="/accounting.html#costs" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-content">
+                    <h3>Agricultural Budgeting</h3>
+                    <p>Create effective budgets and forecasts for your farming operations</p>
+                    <a href="/accounting.html#budgeting" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 M77 AG. All rights reserved.</p>
+    </footer>
+</body>
+</html>
