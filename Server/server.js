@@ -25,3 +25,20 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // Route placeholder (we'll add real routes soon)
 app.get('/api/test', (req, res) => {
+// Route placeholder (we'll add real routes soon)
+app.get('/api/test', (req, res) => {
+    res.json({ message: 'API is working!' });
+});
+
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Handle SPA routing, return all requests to index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public', 'index.html'));
+});
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
