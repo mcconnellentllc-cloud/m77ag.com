@@ -50,3 +50,58 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+// This is not a complete server.js file, but rather the sections to add to your existing server.js
+
+// Add these near the top of your server.js, after other imports
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const User = require('./models/User');
+
+// Load environment variables
+dotenv.config();
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
+})
+.then(() => console.log('MongoDB connected successfully'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+// Import route files
+const authRoutes = require('./routes/auth');
+const apiRoutes = require('./routes/api');
+const adminRoutes = require('./routes/admin');
+const publicRoutes = require('./routes/public');
+
+// Use routes
+app.use('/api/auth', authRoutes);
+app.use('/api', apiRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/', publicRoutes);
+
+// Create default admin user if it doesn't exist
+const createAdminUser = async () => {
+  try {
+    const adminExists = await User.findOne({ email: process.env.ADMIN_EMAIL });
+    
+    if (!adminExists) {
+      const adminUser = new User({
+        name: 'Admin',
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASSWORD,
+        role: 'admin'
+      });
+      
+      await adminUser.save();
+      console.log('Default admin user created');
+    }
+  } catch (error) {
+    console.error('Error creating admin user:', error);
+  }
+};
+
+// Call this function after MongoDB connection is established
+createAdminUser();
