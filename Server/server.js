@@ -1,3 +1,7 @@
+// Add debugging information
+console.log('Starting server...');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('PORT:', process.env.PORT || 3000);
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
