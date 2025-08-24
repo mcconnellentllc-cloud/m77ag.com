@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Connect to MongoDB (will connect routes when we create them)
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -23,9 +23,17 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-// Route placeholder (we'll add real routes soon)
-app.get('/api/test', (req, res) => {
-// Route placeholder (we'll add real routes soon)
+// Route imports (uncomment when files are created)
+// const authRoutes = require('./routes/auth');
+// const apiRoutes = require('./routes/api');
+// const adminRoutes = require('./routes/admin');
+
+// Use routes (uncomment when files are created)
+// app.use('/api/auth', authRoutes);
+// app.use('/api', apiRoutes);
+// app.use('/api/admin', adminRoutes);
+
+// Test route to verify API is working
 app.get('/api/test', (req, res) => {
     res.json({ message: 'API is working!' });
 });
