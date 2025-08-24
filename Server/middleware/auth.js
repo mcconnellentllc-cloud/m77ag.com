@@ -49,4 +49,8 @@ const adminOnly = async (req, res, next) => {
   next();
 };
 
+<<<<<<< HEAD
 module.exports = { auth, adminOnly };
+=======
+module.exports = { auth, adminOnly };
+>>>>>>> 10490b0f01f649cdb35d46571afe1dde14507755
