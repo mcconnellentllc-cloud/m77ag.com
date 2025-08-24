@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -435,4 +436,443 @@
         });
     </script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings - M77 AG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #121212;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: #8bc34a;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 2rem;
+        }
+        
+        nav a {
+            position: relative;
+            padding-bottom: 0.3rem;
+        }
+        
+        nav a.active {
+            border-bottom: 2px solid #8bc34a;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-outline {
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: transparent;
+            color: #ffffff;
+        }
+        
+        .btn-primary {
+            background-color: #8bc34a;
+            border: none;
+            color: #000000;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Settings Styles */
+        .settings-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
+        .settings-header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+        
+        .settings-header h1 {
+            color: #8bc34a;
+            margin-bottom: 0.5rem;
+        }
+        
+        .settings-section {
+            margin-bottom: 3rem;
+        }
+        
+        .settings-section h2 {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background-color: #222;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus, 
+        .form-group select:focus {
+            outline: none;
+            border-color: #8bc34a;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .checkbox-group input {
+            margin-right: 0.5rem;
+        }
+        
+        .save-button {
+            background-color: #8bc34a;
+            color: #000;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .save-button:hover {
+            background-color: #9bcc5e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .danger-zone {
+            background-color: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .danger-zone h3 {
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+        
+        .danger-button {
+            background-color: #dc3545;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .danger-button:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        footer p {
+            color: #777;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav {
+                margin: 1rem 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+                margin-left: 0;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .settings-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="/" class="logo">M77<span>AG</span></a>
+        
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/crops.html">Crops</a></li>
+                <li><a href="/cattle.html">Cattle</a></li>
+                <li><a href="/services.html">Services</a></li>
+                <li><a href="/applications.html">Applications</a></li>
+                <li><a href="/about.html">About</a></li>
+            </ul>
+        </nav>
+        
+        <div class="auth-buttons">
+            <span id="userName" style="margin-right: 10px;"></span>
+            <button id="logoutBtn" class="btn btn-outline">Log Out</button>
+            <a href="/calculator.html" class="btn btn-primary">Request Quote</a>
+        </div>
+    </header>
+    
+    <!-- Settings Container -->
+    <div class="settings-container">
+        <div class="settings-header">
+            <h1>Account Settings</h1>
+            <p>Manage your profile and account preferences</p>
+        </div>
+        
+        <!-- Personal Information Section -->
+        <div class="settings-section">
+            <h2>Personal Information</h2>
+            <form id="personalInfoForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" value="Demo User">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" value="demo@m77ag.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" value="(555) 123-4567">
+                </div>
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company" value="Demo Farm LLC">
+                </div>
+                <button type="submit" class="save-button">Save Changes</button>
+            </form>
+        </div>
+        
+        <!-- Password Section -->
+        <div class="settings-section">
+            <h2>Change Password</h2>
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" name="currentPassword">
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword">
+                </div>
+                <button type="submit" class="save-button">Update Password</button>
+            </form>
+        </div>
+        
+        <!-- Notification Preferences -->
+        <div class="settings-section">
+            <h2>Notification Preferences</h2>
+            <form id="notificationForm">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="emailNotifications" name="emailNotifications" checked>
+                    <label for="emailNotifications">Email notifications</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="smsNotifications" name="smsNotifications" checked>
+                    <label for="smsNotifications">SMS notifications</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="marketingEmails" name="marketingEmails">
+                    <label for="marketingEmails">Marketing emails</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="serviceUpdates" name="serviceUpdates" checked>
+                    <label for="serviceUpdates">Service updates</label>
+                </div>
+                <button type="submit" class="save-button">Save Preferences</button>
+            </form>
+        </div>
+        
+        <!-- Danger Zone -->
+        <div class="danger-zone">
+            <h3>Danger Zone</h3>
+            <p>Once you delete your account, there is no going back. Please be certain.</p>
+            <button id="deleteAccountBtn" class="danger-button">Delete Account</button>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 M77 AG. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const loggedIn = localStorage.getItem('loggedIn');
+            
+            if (!loggedIn || loggedIn !== 'true') {
+                // Not logged in, redirect to login page
+                alert('Please log in to access your account settings');
+                window.location.href = '/account/';
+                return;
+            }
+            
+            // Display user information
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+            }
+            
+            // Set up logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('loggedIn');
+                localStorage.removeItem('user');
+                window.location.href = '/';
+            });
+            
+            // Personal Info Form
+            document.getElementById('personalInfoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Personal information updated successfully!');
+            });
+            
+            // Password Form
+            document.getElementById('passwordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                    alert('Please fill in all password fields.');
+                    return;
+                }
+                
+                if (newPassword !== confirmPassword) {
+                    alert('New passwords do not match.');
+                    return;
+                }
+                
+                alert('Password updated successfully!');
+                this.reset();
+            });
+            
+            // Notification Form
+            document.getElementById('notificationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Notification preferences saved!');
+            });
+            
+            // Delete Account
+            document.getElementById('deleteAccountBtn').addEventListener('click', function() {
+                const confirmed = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+                if (confirmed) {
+                    alert('Account deleted successfully. You will be redirected to the homepage.');
+                    localStorage.removeItem('loggedIn');
+                    localStorage.removeItem('user');
+                    window.location.href = '/';
+                }
+            });
+        });
+    </script>
+</body>
+>>>>>>> 10490b0f01f649cdb35d46571afe1dde14507755
 </html>
