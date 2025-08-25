@@ -1,52 +1,25 @@
+// server/middleware/auth.js
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
 
-/**
- * Authentication middleware
- * Verifies JWT token from request headers and attaches user to request object
- */
-const auth = async (req, res, next) => {
+module.exports = (req, res, next) => {
+  // Get token from header
+  const token = req.header('Authorization')?.replace('Bearer ', '');
+  
+  // Check if no token
+  if (!token) {
+    return res.status(401).json({ message: 'No token, authorization denied' });
+  }
+  
   try {
-    // Get token from Authorization header
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-    
-    if (!token) {
-      return res.status(401).json({ error: 'Authentication required' });
-    }
-    
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    // Find user with correct ID and token
-    const user = await User.findOne({ 
-      _id: decoded._id, 
-      'tokens.token': token 
-    });
+    // Add user id from payload to request
+    req.userId = decoded.userId;
+    req.userRole = decoded.role;
     
-    if (!user) {
-      throw new Error();
-    }
-    
-    // Attach token and user to request object
-    req.token = token;
-    req.user = user;
     next();
-  } catch (error) {
-    res.status(401).json({ error: 'Please authenticate' });
+  } catch (err) {
+    res.status(401).json({ message: 'Token is not valid' });
   }
 };
-
-/**
- * Admin authorization middleware
- * Checks if authenticated user has admin role
- * Must be used after auth middleware
- */
-const adminOnly = async (req, res, next) => {
-  if (!req.user || req.user.role !== 'admin') {
-    return res.status(403).json({ error: 'Admin access required' });
-  }
-  
-  next();
-};
-
-module.exports = { auth, adminOnly };

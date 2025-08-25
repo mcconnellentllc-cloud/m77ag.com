@@ -1,84 +1,118 @@
-$serverContent = @"
-// Server Configuration
-require('dotenv').config();
+// server.js - Main server file for M77 AG website
+
+// Import required packages
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
 const cors = require('cors');
-const bcrypt = require('bcryptjs');
+const path = require('path');
+const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
 
-// Import routes
-const authRoutes = require('./routes/auth');
-const apiRoutes = require('./routes/api');
+// Load environment variables
+dotenv.config();
 
-// Initialize express
+// Initialize Express app
 const app = express();
 
+// Define port (use environment variable or default to 3000)
+const PORT = process.env.PORT || 3000;
+
 // Middleware
-app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('MongoDB connected...'))
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('MongoDB connected successfully'))
   .catch(err => {
-    console.error('MongoDB connection error:', err.message);
+    console.error('MongoDB connection error:', err);
     process.exit(1);
   });
 
-// Use Routes
-app.use('/api/auth', authRoutes);
+// Import route files
+const apiRoutes = require('./routes/api');
+const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin');
+
+// Use routes
 app.use('/api', apiRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 
-// Create admin user if doesn't exist
-const User = require('./models/User');
+// Serve static files from the 'docs' directory
+app.use(express.static(path.join(__dirname, '../docs')));
 
-async function createAdminUser() {
+// Create admin user if it doesn't exist
+const createAdminUser = async () => {
   try {
-    // Check if admin exists
-    const adminExists = await User.findOne({ email: 'admin@m77ag.com' });
+    const User = require('./models/User');
+    
+    // Check if admin user already exists
+    const adminExists = await User.findOne({ role: 'admin' });
     
     if (!adminExists) {
-      // Create salt & hash
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash('M77admin2024!', salt);
-      
-      // Create admin user
-      const newAdmin = new User({
+      // Create new admin user
+      const adminUser = new User({
         name: 'M77 Administrator',
         email: 'admin@m77ag.com',
-        password: hashedPassword,
+        password: 'M77admin2024!', // This will be hashed by the pre-save hook
         role: 'admin'
       });
       
-      await newAdmin.save();
+      await adminUser.save();
       console.log('Admin user created successfully');
+    } else {
+      console.log('Admin user already exists');
     }
   } catch (err) {
     console.error('Error creating admin user:', err);
   }
-}
+};
 
-// Call the function to create admin user
-createAdminUser();
+// Function to create necessary database collections and indexes
+const initializeDatabase = async () => {
+  try {
+    // Initialize database collections here if needed
+    console.log('Database initialized successfully');
+  } catch (err) {
+    console.error('Error initializing database:', err);
+  }
+};
 
-// Serve static assets
-app.use(express.static(path.join(__dirname, '../docs')));
-
-// For any route not matching API routes, serve the main HTML file
+// Handle all other routes by serving index.html (for SPA routing)
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../docs', 'index.html'));
+  // Check if request is for an admin page
+  if (req.path.startsWith('/admin')) {
+    res.sendFile(path.join(__dirname, '../docs/admin/index.html'));
+  } 
+  // Check if request is for an account page
+  else if (req.path.startsWith('/account')) {
+    res.sendFile(path.join(__dirname, '../docs/account/index.html'));
+  }
+  // Otherwise serve the main index page
+  else {
+    res.sendFile(path.join(__dirname, '../docs/index.html'));
+  }
 });
 
-// Define port
-const PORT = process.env.PORT || 5000;
+// Start the server
+app.listen(PORT, async () => {
+  console.log(`Server running on port ${PORT}`);
+  
+  // Initialize database and create admin user
+  await initializeDatabase();
+  await createAdminUser();
+  
+  console.log(`M77 AG server is ready! Visit: http://localhost:${PORT}`);
+});
 
-// Start server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-"@
+// Error handling
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err);
+});
 
-Set-Content -Path "server\server.js" -Value $serverContent
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  process.exit(1);
+});
