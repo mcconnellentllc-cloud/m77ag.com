@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ error: 'Authentication required' });
     }
-
+    
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
@@ -22,11 +22,11 @@ const auth = async (req, res, next) => {
       _id: decoded._id, 
       'tokens.token': token 
     });
-
+    
     if (!user) {
       throw new Error();
     }
-
+    
     // Attach token and user to request object
     req.token = token;
     req.user = user;
@@ -49,8 +49,4 @@ const adminOnly = async (req, res, next) => {
   next();
 };
 
-<<<<<<< HEAD
 module.exports = { auth, adminOnly };
-=======
-module.exports = { auth, adminOnly };
->>>>>>> 10490b0f01f649cdb35d46571afe1dde14507755

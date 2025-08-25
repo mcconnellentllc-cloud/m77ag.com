@@ -1,93 +1,84 @@
-// Add debugging information
-console.log('Starting server...');
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('PORT:', process.env.PORT || 3000);
-
-// Import required modules
+$serverContent = @"
+// Server Configuration
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
 const path = require('path');
-require('dotenv').config();
+const cors = require('cors');
+const bcrypt = require('bcryptjs');
+
+// Import routes
+const authRoutes = require('./routes/auth');
+const apiRoutes = require('./routes/api');
 
 // Initialize express
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
-// Create Admin User function
-const createAdminUser = async () => {
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => {
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1);
+  });
+
+// Use Routes
+app.use('/api/auth', authRoutes);
+app.use('/api', apiRoutes);
+
+// Create admin user if doesn't exist
+const User = require('./models/User');
+
+async function createAdminUser() {
   try {
-    // Check if we have a User model, if not we'll create a simple one
-    let User;
-    try {
-      User = mongoose.model('User');
-    } catch (error) {
-      // Define a simple User schema if it doesn't exist
-      const userSchema = new mongoose.Schema({
-        email: { type: String, required: true, unique: true },
-        password: { type: String, required: true },
-        name: { type: String, default: 'Admin' },
-        role: { type: String, default: 'admin' },
-        createdAt: { type: Date, default: Date.now }
-      });
-      
-      User = mongoose.model('User', userSchema);
-    }
-    
-    // Check if admin already exists
+    // Check if admin exists
     const adminExists = await User.findOne({ email: 'admin@m77ag.com' });
     
     if (!adminExists) {
+      // Create salt & hash
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash('M77admin2024!', salt);
+      
       // Create admin user
-      const adminUser = new User({
+      const newAdmin = new User({
+        name: 'M77 Administrator',
         email: 'admin@m77ag.com',
-        password: 'M77admin2024!', // In production, you'd want to hash this
-        name: 'Admin',
+        password: hashedPassword,
         role: 'admin'
       });
       
-      await adminUser.save();
-      console.log('Default admin user created');
-    } else {
-      console.log('Admin user already exists');
+      await newAdmin.save();
+      console.log('Admin user created successfully');
     }
-  } catch (error) {
-    console.error('Error creating admin user:', error);
+  } catch (err) {
+    console.error('Error creating admin user:', err);
   }
-};
+}
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/m77ag', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => {
-    console.log('Connected to MongoDB');
-    createAdminUser(); // Create admin user after connection
-})
-.catch(err => console.error('MongoDB connection error:', err));
+// Call the function to create admin user
+createAdminUser();
 
-// Test route to verify API is working
-app.get('/api/test', (req, res) => {
-    res.json({ message: 'API is working!' });
-});
-
-// Serve static files from the docs directory
+// Serve static assets
 app.use(express.static(path.join(__dirname, '../docs')));
 
-// Handle SPA routing, return all requests to index.html
+// For any route not matching API routes, serve the main HTML file
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../docs', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../docs', 'index.html'));
 });
 
+// Define port
+const PORT = process.env.PORT || 5000;
+
 // Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+"@
+
+Set-Content -Path "server\server.js" -Value $serverContent

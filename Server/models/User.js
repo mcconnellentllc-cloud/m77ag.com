@@ -1,3 +1,4 @@
+$userModelContent = @"
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
@@ -112,3 +113,6 @@ UserSchema.pre('save', async function(next) {
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
+"@
+
+Set-Content -Path "server\models\User.js" -Value $userModelContent
